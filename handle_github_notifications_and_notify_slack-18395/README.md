@@ -1,0 +1,1 @@
+Receive GitHub notifications when new issues or pull requests are opened and notify Slack.

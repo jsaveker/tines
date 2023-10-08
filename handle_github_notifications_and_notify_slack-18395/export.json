@@ -1,0 +1,844 @@
+{
+  "schema_version": 18,
+  "standard_lib_version": 36,
+  "action_runtime_version": 4,
+  "name": "Handle GitHub notifications and notify Slack",
+  "description": "Receive GitHub notifications when new issues or pull requests are opened and notify Slack.",
+  "guid": "964286e5bb6dfb543e3a2a7ef3b1f484",
+  "slug": "handle_github_notifications_and_notify_slack",
+  "agents": [
+    {
+      "type": "Agents::WebhookAgent",
+      "name": "Receive GitHub Event",
+      "disabled": false,
+      "description": "",
+      "guid": "f0832fb0e6e3f1e00aaad62e12e99e9c",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "path": "56ab10d44e5e851f8bdd37d251168a66",
+        "secret": "5a6e2c44e336e45270d3762e10da62d7",
+        "verbs": "get,post"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Review?",
+      "disabled": false,
+      "description": "",
+      "guid": "6e1e5567fb34c6f99601af68bd510827",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "rules": [
+          {
+            "type": "in",
+            "value": [
+              "review"
+            ],
+            "path": "=KEYS(receive_github_event.body)"
+          },
+          {
+            "type": "in",
+            "value": [
+              "pull_request"
+            ],
+            "path": "=KEYS(receive_github_event.body)"
+          },
+          {
+            "type": "field==value",
+            "value": "submitted",
+            "path": "<<receive_github_event.body.action>>"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Not Author",
+      "disabled": false,
+      "description": "",
+      "guid": "ab2fe19140563cc532f4ecc46eceaf64",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "rules": [
+          {
+            "type": "field!=value",
+            "value": "<<DOWNCASE(receive_github_event.body.pull_request.user.login)>>",
+            "path": "<<DOWNCASE(receive_github_event.body.review.user.login)>>"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Send Pull Request Review to Slack",
+      "disabled": false,
+      "description": "",
+      "guid": "8bac8e2e8f76a07d1e328e856e81ec27",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "url": "https://slack.com/api/chat.postMessage",
+        "content_type": "json",
+        "method": "post",
+        "payload": {
+          "channel": "git-ops",
+          "text": "<<IF(receive_github_event.body.review.state = \"approved\", \"✅\", \"❓\")>> <<DOWNCASE(receive_github_event.body.review.user.login)>> <<IF(receive_github_event.body.review.state = \"approved\", \"approved\", \"commented on\")>> your pull request for \\<<<receive_github_event.body.pull_request.html_url>>|<<receive_github_event.body.pull_request.title>>><<IF(SIZE(receive_github_event.body.review.body) > 0, \":\\n\\nComment:\\n\\n> \" & receive_github_event.body.review.body)>>"
+        },
+        "headers": {
+          "Authorization": "Bearer <<CREDENTIAL.slack>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": []
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Review Comment?",
+      "disabled": false,
+      "description": "",
+      "guid": "c1c993307880014f93d52a4fe64b5adb",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "rules": [
+          {
+            "type": "in",
+            "value": "comment",
+            "path": "=KEYS(receive_github_event.body)"
+          },
+          {
+            "type": "in",
+            "value": "issue",
+            "path": "=KEYS(receive_github_event.body)"
+          },
+          {
+            "type": "field==value",
+            "value": "created",
+            "path": "<<receive_github_event.body.action>>"
+          },
+          {
+            "type": "in",
+            "value": "/pull/",
+            "path": "=receive_github_event.body.issue.html_url"
+          }
+        ],
+        "must_match": "3"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Not Author",
+      "disabled": false,
+      "description": "",
+      "guid": "9352da53e0dce824a3fc3fa43b4d8355",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "rules": [
+          {
+            "type": "field!=value",
+            "value": "<<DOWNCASE(receive_github_event.body.issue.user.login)>>",
+            "path": "<<DOWNCASE(receive_github_event.body.comment.user.login)>>"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Send Pull Request Comment to Slack",
+      "disabled": false,
+      "description": "",
+      "guid": "323a16dc5dc0dbee73856f639549d285",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "url": "https://slack.com/api/chat.postMessage",
+        "content_type": "json",
+        "method": "post",
+        "payload": {
+          "channel": "<<RESOURCE.githubtoslack[DOWNCASE(DOWNCASE(receive_github_event.body.issue.user.login))]>>",
+          "text": "❓ <<DOWNCASE(receive_github_event.body.comment.user.login)>> commented on your pull request for \\<<<receive_github_event.body.issue.html_url>>|<<receive_github_event.body.issue.title>>><<IF(SIZE(receive_github_event.body.comment.body) > 0, \":\\n\\nComment:\\n\\n> \" & receive_github_event.body.comment.body)>>"
+        },
+        "headers": {
+          "Authorization": "Bearer <<CREDENTIAL.slack>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": []
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Issue opened?",
+      "disabled": false,
+      "description": "",
+      "guid": "c2cbeaf477863d6a36a765d386ebe8eb",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "rules": [
+          {
+            "type": "in",
+            "value": "issue",
+            "path": "=KEYS(receive_github_event.body)"
+          },
+          {
+            "type": "field==value",
+            "value": "opened",
+            "path": "<<receive_github_event.body.action>>"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Matching label?",
+      "disabled": false,
+      "description": "",
+      "guid": "2d9ae88742f2d62070e4d810a9de498c",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "rules": [
+          {
+            "type": "in",
+            "path": "=MAP(receive_github_event.body.issue.labels, \"name\")",
+            "value": "bug"
+          },
+          {
+            "type": "in",
+            "path": "=MAP(receive_github_event.body.issue.labels, \"name\")",
+            "value": "engineering-assistance"
+          }
+        ],
+        "must_match": 1
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Issue labeled?",
+      "disabled": false,
+      "description": "",
+      "guid": "8c14ce6f69a41c011aec0f27c0dd270c",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "rules": [
+          {
+            "type": "in",
+            "value": "issue",
+            "path": "=KEYS(receive_github_event.body)"
+          },
+          {
+            "type": "field==value",
+            "value": "labeled",
+            "path": "<<receive_github_event.body.action>>"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Matching label?",
+      "disabled": false,
+      "description": "",
+      "guid": "c91b768fb7bf63e8e20a4f6754dca83e",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "rules": [
+          {
+            "type": "field==value",
+            "value": "bug",
+            "path": "<<receive_github_event.body.label.name>>"
+          },
+          {
+            "type": "field==value",
+            "value": "engineering-assistance",
+            "path": "<<receive_github_event.body.label.name>>"
+          }
+        ],
+        "must_match": "1"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Format Data",
+      "disabled": false,
+      "description": "",
+      "guid": "3b008de3ad815008e868fa8b6ab0d41a",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "type": "labeled",
+          "issue": "=receive_github_event.body.issue",
+          "label": "<<receive_github_event.body.label.name>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Dedupe",
+      "disabled": false,
+      "description": "",
+      "guid": "a9ac12ed5adc50cdd8cbfdec20805cde",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "mode": "deduplicate",
+        "path": "<<format_data.issue.id>>",
+        "lookback": "200"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Set Message Titles",
+      "disabled": false,
+      "description": "",
+      "guid": "809cc82939ea7c778e9360f9ec217393",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "labeled": {
+            "bug": "🐛 *New bug label applied*",
+            "engineering-assistance": "🤝 *New engineering-assistance label applied*"
+          },
+          "opened": {
+            "bug": "🐛 *New bug opened*",
+            "engineering-assistance": "🤝 *New engineering-assistance issue opened applied*"
+          }
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Send Issue Notification to Slack",
+      "disabled": false,
+      "description": "",
+      "guid": "1cf178462c0a815175abdb6174fe1143",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "url": "https://slack.com/api/chat.postMessage",
+        "content_type": "json",
+        "method": "post",
+        "payload": {
+          "channel": "git-ops",
+          "text": "<<set_message_titles[format_data.type][format_data.label]>> - \\<<<format_data.issue.html_url>>|<<ESCAPE(format_data.issue.title)>>> \\<<<STORY_RUN_LINK()>>|(Story Run)>"
+        },
+        "headers": {
+          "Authorization": "Bearer <<CREDENTIAL.slack>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": []
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Format Data",
+      "disabled": false,
+      "description": "",
+      "guid": "461a4fbe20b1be926fc804308b4d42b0",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "type": "opened",
+          "issue": "=receive_github_event.body.issue",
+          "label": "<<FIRST(CONCAT(FLATTEN(WHERE(receive_github_event.body.issue.labels, \"name\", \"bug\")), WHERE(receive_github_event.body.issue.labels, \"name\", \"engineering-assistance\"))).name>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Short delay",
+      "disabled": false,
+      "description": null,
+      "guid": "06d28592e5d4e119da475bfcee8a593c",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+      "options": {
+        "mode": "delay",
+        "seconds": "5"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": true,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    }
+  ],
+  "diagram_notes": [
+    {
+      "content": "# Overview\n\nGitHub is a critical collaboration tool for many teams. Each time new code is proposed, or a new bug is filed, reducing the time in which someone can react to those events can make a huge difference when releasing a new feature or preventing a critical outage.",
+      "position": [
+        1290.0,
+        315.0
+      ],
+      "guid": "0f588aa9637b2f5abd28c3c3f12647f1",
+      "width": null
+    },
+    {
+      "content": "https://image-uploads.tines.com/github.png",
+      "position": [
+        -255.0,
+        270.0
+      ],
+      "guid": "db5a8a86514eb6457a9304fe7b510055",
+      "width": null
+    },
+    {
+      "content": "# Requirements\n\n- [x] A GitHub repository configured to send webhook events for **Issues**, **Pull request**, **Pull request reviews**, and **Labels** categories to the address in the Webhook Action in this Story.\n- [x] A Credential `slack`",
+      "position": [
+        975.0,
+        585.0
+      ],
+      "guid": "aa07567d11d26c34fabda1f2decf2e26",
+      "width": null
+    },
+    {
+      "content": "Find new and existing issues that receive the **bug** or **engineering-assistance** labels and send them to the Slack channel **#engineering-notifications**.",
+      "position": [
+        -75.0,
+        675.0
+      ],
+      "guid": "7fd0c376f6e28810b177f7a244bf851e",
+      "width": null
+    },
+    {
+      "content": "Notify the team of any new pull request comments left by your team and any pull request approvals to merge new code.",
+      "position": [
+        615.0,
+        600.0
+      ],
+      "guid": "f313970e260487f93d02d754dd6f4089",
+      "width": null
+    }
+  ],
+  "links": [
+    {
+      "source": 0,
+      "receiver": 9
+    },
+    {
+      "source": 0,
+      "receiver": 4
+    },
+    {
+      "source": 0,
+      "receiver": 7
+    },
+    {
+      "source": 0,
+      "receiver": 1
+    },
+    {
+      "source": 1,
+      "receiver": 2
+    },
+    {
+      "source": 2,
+      "receiver": 3
+    },
+    {
+      "source": 4,
+      "receiver": 5
+    },
+    {
+      "source": 5,
+      "receiver": 6
+    },
+    {
+      "source": 7,
+      "receiver": 8
+    },
+    {
+      "source": 8,
+      "receiver": 15
+    },
+    {
+      "source": 9,
+      "receiver": 10
+    },
+    {
+      "source": 10,
+      "receiver": 16
+    },
+    {
+      "source": 11,
+      "receiver": 12
+    },
+    {
+      "source": 12,
+      "receiver": 13
+    },
+    {
+      "source": 13,
+      "receiver": 14
+    },
+    {
+      "source": 15,
+      "receiver": 12
+    },
+    {
+      "source": 16,
+      "receiver": 11
+    }
+  ],
+  "diagram_layout": "{\"f0832fb0e6e3f1e00aaad62e12e99e9c\":[390,180],\"6e1e5567fb34c6f99601af68bd510827\":[510,345],\"ab2fe19140563cc532f4ecc46eceaf64\":[510,420],\"8bac8e2e8f76a07d1e328e856e81ec27\":[510,510],\"c1c993307880014f93d52a4fe64b5adb\":[780,345],\"9352da53e0dce824a3fc3fa43b4d8355\":[780,420],\"323a16dc5dc0dbee73856f639549d285\":[780,510],\"c2cbeaf477863d6a36a765d386ebe8eb\":[300,345],\"2d9ae88742f2d62070e4d810a9de498c\":[300,420],\"8c14ce6f69a41c011aec0f27c0dd270c\":[105,345],\"c91b768fb7bf63e8e20a4f6754dca83e\":[105,420],\"3b008de3ad815008e868fa8b6ab0d41a\":[105,600],\"a9ac12ed5adc50cdd8cbfdec20805cde\":[225,675],\"809cc82939ea7c778e9360f9ec217393\":[225,765],\"1cf178462c0a815175abdb6174fe1143\":[225,855],\"461a4fbe20b1be926fc804308b4d42b0\":[300,510],\"06d28592e5d4e119da475bfcee8a593c\":[105,510]}",
+  "send_to_story_enabled": false,
+  "entry_agent_guid": null,
+  "exit_agent_guids": [],
+  "exit_agent_guid": null,
+  "api_entry_action_guids": [],
+  "api_exit_action_guids": [],
+  "keep_events_for": 86400,
+  "reporting_status": true,
+  "send_to_story_access": null,
+  "story_library_metadata": {
+    "tags": [
+      "GitHub",
+      "DevOps",
+      "ChatOps",
+      "Slack",
+      "Engineering",
+      "Intermediate",
+      "IP",
+      "Notify",
+      "Query"
+    ],
+    "icons": [
+      "github",
+      "👌",
+      "slack"
+    ],
+    "visibility": "public"
+  },
+  "monitor_failures": true,
+  "send_to_stories": [],
+  "form": null,
+  "synchronous_webhooks_enabled": false,
+  "forms": [],
+  "pages": [],
+  "tags": [],
+  "time_saved_unit": "minutes",
+  "time_saved_value": 0,
+  "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
+  "integration_product": null,
+  "integration_vendor": null,
+  "exported_at": "2023-10-08T17:27:44Z",
+  "icon": ":github:",
+  "integrations": []
+}

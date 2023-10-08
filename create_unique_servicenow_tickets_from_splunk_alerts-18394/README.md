@@ -1,0 +1,1 @@
+Consolidate multiple Splunk alerts with the same IP address into ServiceNow tickets. Unique alerts lead to new incident tickets, child incident tickets, or comments on existing records.

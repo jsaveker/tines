@@ -1,0 +1,992 @@
+{
+  "schema_version": 18,
+  "standard_lib_version": 36,
+  "action_runtime_version": 4,
+  "name": "Create unique ServiceNow tickets from Splunk alerts",
+  "description": "Consolidate multiple Splunk alerts with the same IP address into ServiceNow tickets. Unique alerts lead to new incident tickets, child incident tickets, or comments on existing records.",
+  "guid": "61bd23a70c41e7720e8f102ca873a849",
+  "slug": "create_unique_servicenow_tickets_from_splunk_alerts",
+  "agents": [
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Simulate Splunk alert",
+      "disabled": false,
+      "description": null,
+      "guid": "f59f8f34845d3bf782b52aa31d0efed1",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<META.tenant.domain>>/webhook/6718c9d993fa71da376bb9c1c6d36da0/40f1311013cf7b7835e8f1c823e278c0",
+        "content_type": "json",
+        "method": "post",
+        "payload": {
+          "user_email_address": "somebody@gmail.com",
+          "ip_address": "104.173.175.118",
+          "date": "<<DATE(\"now\", \"%Y-%m-%d\")>>",
+          "device": "kdpc"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Simulate Splunk alert 2",
+      "disabled": false,
+      "description": null,
+      "guid": "064e48ca03f7ae38269cea48d9354a35",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<META.tenant.domain>>/webhook/9f0c56b8967d3c40f2e704e036b609aa/40f1311013cf7b7835e8f1c823e278c0",
+        "content_type": "json",
+        "method": "post",
+        "payload": {
+          "user_email_address": "somebody@gmail.com",
+          "ip_address": "104.173.178.119",
+          "date": "<<DATE(\"now\", \"%Y-%m-%d\")>>",
+          "device": "pc"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Simulate Splunk alert 3",
+      "disabled": false,
+      "description": null,
+      "guid": "1021415bc8472a8e1dac96f05dd0d366",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<META.tenant.domain>>/webhook/7f632222d1edc8488672c9051a27a055/40f1311013cf7b7835e8f1c823e278c0",
+        "content_type": "json",
+        "method": "post",
+        "payload": {
+          "user_email_address": "somebody@gmail.com",
+          "ip_address": "104.173.178.120",
+          "date": "<<DATE(\"now\", \"%Y-%m-%d\")>>",
+          "device": "ipad"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::WebhookAgent",
+      "name": "Receive Splunk alert",
+      "disabled": false,
+      "description": null,
+      "guid": "44e2f76cfad862e4a5441bd4f214382f",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "path": "6718c9d993fa71da376bb9c1c6d36da0",
+        "secret": "56e43f0a1ffa0696d5f57659f063d5aa",
+        "verbs": "get,post"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Implode",
+      "disabled": false,
+      "description": null,
+      "guid": "53445b115182d2804a8e65e5246c8c27",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "mode": "implode",
+        "item_path": "=receive_splunk_alert.body",
+        "guid_path": "=guid_path",
+        "size_path": "=size_path",
+        "seconds": "30"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Create new incident ticket in ServiceNow",
+      "disabled": false,
+      "description": "Create a New Incident Ticket in ServiceNow.",
+      "guid": "da0f4040dd9b2d47c6604bc468f08105",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<RESOURCE.servicenow_url>>/api/now/v1/table/incident",
+        "content_type": "json",
+        "method": "post",
+        "basic_auth": "<<RESOURCE.servicenow_user>>:<<CREDENTIAL.servicenow>>",
+        "payload": {
+          "short_description": "There is an issue with IP address <<receive_splunk_alert.body.ip_address>>",
+          "comments": "[code] An incident from splunk has been received with the following detail. <br> User email address is <<receive_splunk_alert.body.user_email_address>> <br> Device on which error was found is <<receive_splunk_alert.body.device>> <br> [/code]"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "e80fe4d9d4cd93ca8e4629abffa2fcff39a9e08bd12b1b2c1b72a044189989ff",
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": "servicenow"
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Record exists",
+      "disabled": false,
+      "description": null,
+      "guid": "b4f5d66883e56910714cd6018ba3ff18",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "rules": [
+          {
+            "type": "field==value",
+            "value": "200",
+            "path": "<<search_incident_table_in_servicenow.status>>"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Drop duplicates",
+      "disabled": false,
+      "description": null,
+      "guid": "d7ed89b408a4ee3947dc4a97c5cd5f5e",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "mode": "deduplicate",
+        "path": "<<receive_splunk_alert.body>>",
+        "lookback": "5"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Add comment to existing record in table in ServiceNow",
+      "disabled": false,
+      "description": "Adds a comment to an existing record or case {{.sys_id}} in the table, {{.tableName}} in ServiceNow. e.g. for the 'incident' table the url would be /api/now/table/incident",
+      "guid": "25b20546800a93d006980d7e819d0c11",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<RESOURCE.servicenow_url>>/api/now/table/incident/<<search_incident_table_in_servicenow.body.result[0].sys_id>>",
+        "method": "put",
+        "content_type": "json",
+        "payload": {
+          "comments": "There has been another issue relating to this IP address. User email address is <<receive_splunk_alert.body.user_email_address.body.user_email_address>> Device on which error was found is <<receive_splunk_alert.body.device>>."
+        },
+        "basic_auth": "<<RESOURCE.servicenow_user>>:<<CREDENTIAL.servicenow>>"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "75b704d2e6abeb93114cf145cdc47972a9df7875c38a4426c0dbc6f1c9e8b813",
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": "servicenow"
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Grab IPs",
+      "disabled": false,
+      "description": null,
+      "guid": "2d839a50ecc9f6b5cd49976ec14dfcef",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "mode": "message_only",
+        "loop": "=implode",
+        "payload": {
+          "IP adresses": "<<LOOP.value.ip_address>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Unique IPs",
+      "disabled": false,
+      "description": null,
+      "guid": "ae8f4937c8c5e319b366d826d7759db8",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "mode": "explode",
+        "path": "=UNIQ(grab_ips)",
+        "to": "individual_ip",
+        "limit": "500"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Prepare details for ServiceNow tickets",
+      "disabled": false,
+      "description": null,
+      "guid": "fe7a260ed3cd10f58c34fd530d271534",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "message": "=WHERE(implode, 'ip_address', unique_ips.individual_ip[\"IP adresses\"])"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Create new incident ticket in ServiceNow",
+      "disabled": false,
+      "description": "Create a New Incident Ticket in ServiceNow.",
+      "guid": "1034b8507898919cf7c89dc218c81a11",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<RESOURCE.servicenow_url>>/api/now/v1/table/incident",
+        "content_type": "json",
+        "method": "post",
+        "basic_auth": "<<RESOURCE.servicenow_user>>:<<CREDENTIAL.servicenow>>",
+        "payload": {
+          "short_description": "There have been <<SIZE(prepare_details_for_servicenow_tickets.message)>> issues relating to <<unique_ips.individual_ip[\"IP adresses\"]>> in the last 30 seconds.",
+          "comments": "[code] The details for each incident are as follows: <br>\n\n<<REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(prepare_details_for_servicenow_tickets.message, \"[\", \"\"), \"]\", \"\"), \"{\", \"<br>\"), \"}\",\"\"), \",\", \"\"), \"=>\", \":\"), \"\\\"\", \"\")>>[/code]"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "e80fe4d9d4cd93ca8e4629abffa2fcff39a9e08bd12b1b2c1b72a044189989ff",
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": "servicenow"
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Search incident table in ServiceNow",
+      "disabled": false,
+      "description": "Search the Incident Table in ServiceNow for a keyword",
+      "guid": "520d294680f5e1e9485785e803f38a6c",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<RESOURCE.servicenow_url>>/api/now/v1/table/incident",
+        "content_type": "json",
+        "method": "get",
+        "payload": {
+          "sysparm_query": "123TEXTQUERY321=<<receive_splunk_alert.body.ip_address>>"
+        },
+        "basic_auth": "<<RESOURCE.servicenow_user>>:<<CREDENTIAL.servicenow>>"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "bd2f92e2a791522707c2ee28142d994f697335bc3a6fa5f92037b1d9062fdbf4",
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": "servicenow"
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Record exists",
+      "disabled": false,
+      "description": null,
+      "guid": "2ffde301b5d7c1c479220239cefc57fc",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "rules": [
+          {
+            "type": "field==value",
+            "value": "200",
+            "path": "<<search_incident_table_in_servicenow.status>>"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Search incident table in ServiceNow",
+      "disabled": false,
+      "description": "Search the Incident Table in ServiceNow for a keyword",
+      "guid": "aac680297f1f762c2d40048afcfc85b4",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<RESOURCE.servicenow_url>>/api/now/v1/table/incident",
+        "content_type": "json",
+        "method": "get",
+        "payload": {
+          "sysparm_query": "123TEXTQUERY321=<<receive_splunk_alert.body.ip_address>>"
+        },
+        "basic_auth": "admin:<<CREDENTIAL.servicenow>>"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "bd2f92e2a791522707c2ee28142d994f697335bc3a6fa5f92037b1d9062fdbf4",
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": "servicenow"
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Create new child incident ticket in ServiceNow",
+      "disabled": false,
+      "description": "Create a New Incident Ticket in ServiceNow.",
+      "guid": "aab07f9ffce4d70cf0349bb71fd39548",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<RESOURCE.servicenow_url>>/api/now/v1/table/incident",
+        "content_type": "json",
+        "method": "post",
+        "basic_auth": "<<RESOURCE.servicenow_user>>:<<CREDENTIAL.servicenow>>",
+        "payload": {
+          "short_description": "There has been another incident with this IP address",
+          "comments": "[code] There has been another issue relating to this IP address. User email address is <<receive_splunk_alert.body.user_email_address>> Device on which error was found is <<receive_splunk_alert.body.device>>.[/code]",
+          "parent_incident": "<<search_incident_table_in_servicenow.body.result[0].sys_id>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "e80fe4d9d4cd93ca8e4629abffa2fcff39a9e08bd12b1b2c1b72a044189989ff",
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": "servicenow"
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Simulate Splunk alert 4",
+      "disabled": false,
+      "description": null,
+      "guid": "ea883c28558db86e8762c781f90f8ace",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<META.tenant.domain>>/webhook/6718c9d993fa71da376bb9c1c6d36da0/40f1311013cf7b7835e8f1c823e278c0",
+        "content_type": "json",
+        "method": "post",
+        "payload": {
+          "user_email_address": "somebody@gmail.com",
+          "ip_address": "104.173.175.118",
+          "date": "<<DATE(\"now\", \"%Y-%m-%d\")>>",
+          "device": "ipad"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Drop duplicates",
+      "disabled": false,
+      "description": null,
+      "guid": "7a4786f40d7e48970e81818a643b1186",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "mode": "deduplicate",
+        "path": "<<receive_splunk_alert.body>>",
+        "lookback": "5"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::WebhookAgent",
+      "name": "Receive Splunk alert",
+      "disabled": false,
+      "description": null,
+      "guid": "94321ed89d792f6ae25f3de008903a04",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "path": "9f0c56b8967d3c40f2e704e036b609aa",
+        "secret": "56e43f0a1ffa0696d5f57659f063d5aa",
+        "verbs": "get,post"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Create new incident ticket in ServiceNow",
+      "disabled": false,
+      "description": "Create a New Incident Ticket in ServiceNow.",
+      "guid": "5450f646ea3817a467dc9b821ed3b751",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "url": "https://<<RESOURCE.servicenow_url>>/api/now/v1/table/incident",
+        "content_type": "json",
+        "method": "post",
+        "basic_auth": "<<RESOURCE.servicenow_user>>:<<CREDENTIAL.servicenow>>",
+        "payload": {
+          "short_description": "There is an issue with IP address <<receive_splunk_alert.body.ip_address>>",
+          "comments": "[code] An incident from splunk has been received with the following detail. <br> User email address is <<receive_splunk_alert.body.user_email_address>> <br> Device on which error was found is <<receive_splunk_alert.body.device>> <br> [/code]"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "e80fe4d9d4cd93ca8e4629abffa2fcff39a9e08bd12b1b2c1b72a044189989ff",
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": "servicenow"
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::WebhookAgent",
+      "name": "Receive Splunk alert",
+      "disabled": false,
+      "description": null,
+      "guid": "ee5c1fe8c45cf58db14d9a59faa0b2d0",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "path": "7f632222d1edc8488672c9051a27a055",
+        "secret": "56e43f0a1ffa0696d5f57659f063d5aa",
+        "verbs": "get,post"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Remove duplicates",
+      "disabled": false,
+      "description": null,
+      "guid": "76c22785c8d50bd19db90cfc189d5932",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+      "options": {
+        "mode": "deduplicate",
+        "path": "<<receive_splunk_alert.body>>",
+        "lookback": "5"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    }
+  ],
+  "diagram_notes": [
+    {
+      "content": "**Method 1**\n\nFor those with the same IP address as an existing ticket in ServiceNow, **add a comment to the ticket**. Otherwise, create a new ticket.",
+      "position": [
+        465.0,
+        -60.0
+      ],
+      "guid": "d342345c8cef2b96f0ccf4b2ecb50972",
+      "width": null
+    },
+    {
+      "content": "**Method 2** \n\nFor those with the same IP address as an existing ticket in ServiceNow, **create a child ticket** and relate it to the parent ticket. Otherwise, create a new ticket.",
+      "position": [
+        1035.0,
+        -45.0
+      ],
+      "guid": "7a14f42e127b6fad7403fb49d3cfca75",
+      "width": null
+    },
+    {
+      "content": "**Method 3** \n\nUsing a time-based `implode action`, wait until the desired time has passed before creating a single ticket in ServiceNow for each IP address, which includes all related incidents.",
+      "position": [
+        1725.0,
+        -60.0
+      ],
+      "guid": "cd939ecea0c57fa8a9db3cce04bb9878",
+      "width": null
+    },
+    {
+      "content": "https://www.tines.com/api/story-library/thumbnail/1194348\n\n# Overview\n\nThree methods to create ServiceNow tickets from Splunk alerts with the same IP address, but unique in other respects. \n\nTo use the story, simply use the `Simulate Splunk alert` actions to the left, updating the payload of each one as necessary.\n",
+      "position": [
+        75.0,
+        -45.0
+      ],
+      "guid": "d10c5b9ad9680759ee8d5e814e2c882f",
+      "width": 256
+    },
+    {
+      "content": "# **Requirements**\n\n## **Credentials**\n- [ ] `servicenow`: Your ServiceNow password, saved as a text credential\n\n## **Resources**\n- [ ] `servicenow_url`: Your ServiceNow domain \n- [ ] `servicenow_user`: Your ServiceNow user ID\n\n",
+      "position": [
+        75.0,
+        345.0
+      ],
+      "guid": "fcc59aed3a5869bb0d5c24ee587e9f4b",
+      "width": 254
+    }
+  ],
+  "links": [
+    {
+      "source": 3,
+      "receiver": 7
+    },
+    {
+      "source": 4,
+      "receiver": 9
+    },
+    {
+      "source": 6,
+      "receiver": 8
+    },
+    {
+      "source": 6,
+      "receiver": 5,
+      "secondary": true
+    },
+    {
+      "source": 7,
+      "receiver": 13
+    },
+    {
+      "source": 9,
+      "receiver": 10
+    },
+    {
+      "source": 10,
+      "receiver": 11
+    },
+    {
+      "source": 11,
+      "receiver": 12
+    },
+    {
+      "source": 13,
+      "receiver": 6
+    },
+    {
+      "source": 14,
+      "receiver": 16
+    },
+    {
+      "source": 14,
+      "receiver": 20,
+      "secondary": true
+    },
+    {
+      "source": 15,
+      "receiver": 14
+    },
+    {
+      "source": 18,
+      "receiver": 15
+    },
+    {
+      "source": 19,
+      "receiver": 18
+    },
+    {
+      "source": 21,
+      "receiver": 22
+    },
+    {
+      "source": 22,
+      "receiver": 4
+    }
+  ],
+  "diagram_layout": "{\"f59f8f34845d3bf782b52aa31d0efed1\":[-225,45],\"064e48ca03f7ae38269cea48d9354a35\":[-225,165],\"1021415bc8472a8e1dac96f05dd0d366\":[-225,285],\"44e2f76cfad862e4a5441bd4f214382f\":[465,105],\"53445b115182d2804a8e65e5246c8c27\":[1725,360],\"da0f4040dd9b2d47c6604bc468f08105\":[720,600],\"b4f5d66883e56910714cd6018ba3ff18\":[465,480],\"d7ed89b408a4ee3947dc4a97c5cd5f5e\":[465,225],\"25b20546800a93d006980d7e819d0c11\":[465,600],\"2d839a50ecc9f6b5cd49976ec14dfcef\":[1725,480],\"ae8f4937c8c5e319b366d826d7759db8\":[1725,600],\"fe7a260ed3cd10f58c34fd530d271534\":[1725,720],\"1034b8507898919cf7c89dc218c81a11\":[1725,855],\"520d294680f5e1e9485785e803f38a6c\":[465,345],\"2ffde301b5d7c1c479220239cefc57fc\":[1035,495],\"aac680297f1f762c2d40048afcfc85b4\":[1035,360],\"aab07f9ffce4d70cf0349bb71fd39548\":[1035,615],\"ea883c28558db86e8762c781f90f8ace\":[-225,405],\"7a4786f40d7e48970e81818a643b1186\":[1035,240],\"94321ed89d792f6ae25f3de008903a04\":[1035,120],\"5450f646ea3817a467dc9b821ed3b751\":[1290,615],\"ee5c1fe8c45cf58db14d9a59faa0b2d0\":[1725,120],\"76c22785c8d50bd19db90cfc189d5932\":[1725,240]}",
+  "send_to_story_enabled": false,
+  "entry_agent_guid": null,
+  "exit_agent_guids": [],
+  "exit_agent_guid": null,
+  "api_entry_action_guids": [],
+  "api_exit_action_guids": [],
+  "keep_events_for": 86400,
+  "reporting_status": true,
+  "send_to_story_access": null,
+  "story_library_metadata": {
+    "tags": [
+      "Beginner",
+      "ServiceNow",
+      "Splunk",
+      "Case Management",
+      "Sneak Peek"
+    ],
+    "icons": [
+      "ServiceNow",
+      "Splunk",
+      "✍️"
+    ],
+    "visibility": "public"
+  },
+  "monitor_failures": false,
+  "send_to_stories": [],
+  "form": null,
+  "synchronous_webhooks_enabled": false,
+  "forms": [],
+  "pages": [],
+  "tags": [],
+  "time_saved_unit": "minutes",
+  "time_saved_value": 0,
+  "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
+  "integration_product": null,
+  "integration_vendor": null,
+  "exported_at": "2023-10-08T17:27:44Z",
+  "icon": ":pencil2:",
+  "integrations": []
+}

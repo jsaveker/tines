@@ -1,0 +1,1280 @@
+{
+  "schema_version": 18,
+  "standard_lib_version": 36,
+  "action_runtime_version": 4,
+  "name": "Backup Tines Stories to GitHub",
+  "description": "The Story features a form that can be used to routinely export and backup Tines Stories to GitHub. Individual Stories can be backed up by using their Story ID, or the argument 'all' for Story ID will backup all Stories that can be accessed.\n\ntags: Intermediate, Internal, GitHub, Backup\nicons: tines, ➡️, github\nvisibility: public",
+  "guid": "d5b72161d78bec4b4918048e7c7cdd36",
+  "slug": "backup_tines_stories_to_github",
+  "agents": [
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Get Story",
+      "disabled": false,
+      "description": null,
+      "guid": "fee2324752208d8af53b7835bff1a868",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://<<META.tenant.domain>>/api/v1/stories/<<backup_tines_story_to_github.body.story_id>>",
+        "content_type": "application_json",
+        "method": "get",
+        "headers": {
+          "x-user-email": "<<RESOURCE.tines_api_email>>",
+          "x-user-token": "<<CREDENTIAL.tines_savkeker>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::WebhookAgent",
+      "name": "Backup Tines Story to Github",
+      "disabled": false,
+      "description": null,
+      "guid": "e6b3aa27821dd6058a275a11e2ad6fa8",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "secret": "d4f6209f0cf12ff1885cf3f2a4d0b749",
+        "verbs": "get,post",
+        "path": "2a0d7d6f55ad96ac7480bc8d4a1a03db"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::SendToStoryAgent",
+      "name": "Send to Story Agent",
+      "disabled": false,
+      "description": null,
+      "guid": "394c59133c66dd37e425522bdbe89095",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "story": "<<STORY.backup_tines_stories_to_github>>",
+        "payload": {
+          "story_id": "all",
+          "commit": "final"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": []
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Check for all Stories",
+      "disabled": false,
+      "description": null,
+      "guid": "ddd830c0136b9db9c0aba7214609d2d4",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "rules": [
+          {
+            "type": "regex",
+            "value": "all",
+            "path": "<<backup_tines_story_to_github.body.story_id>>"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Get Stories",
+      "disabled": false,
+      "description": null,
+      "guid": "5dd1c21ae44b1977ecc89e364c9f3c35",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://<<META.tenant.domain>>/api/v1/stories?per_page=500",
+        "content_type": "application_json",
+        "method": "get",
+        "headers": {
+          "x-user-email": "<<RESOURCE.tines_api_email>>",
+          "x-user-token": "<<CREDENTIAL.tines_savkeker>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Explode Stories",
+      "disabled": false,
+      "description": null,
+      "guid": "b8622cf858724964463d471d1c12e9fd",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "explode",
+        "path": "=get_stories.body.stories",
+        "to": "story"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::FormAgent",
+      "name": "Backup Tines Story to Github",
+      "disabled": false,
+      "description": null,
+      "guid": "c7c86004b14cd4ba8e58ac96c2ade409",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "description": "",
+        "fields": "",
+        "mode": "story_run",
+        "visibility": "tenant",
+        "page_logo": {
+          "name": "github.com-logo-white.svg",
+          "type": "image/svg+xml",
+          "contents": "PHN2ZyBmaWxsPSJ3aGl0ZSIgaGVpZ2h0PSIxMzlweCIgcHJlc2VydmVhc3BlY3RyYXRpbz0ieE1pZFlNaWQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiAxMzkiIHdpZHRoPSI1MTJweCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CjxnIGZpbGw9IndoaXRlIj4KPHBhdGggZmlsbD0id2hpdGUiIGQ9Ik05OC42OTYxNTk4LDU5LjMxMjQ0NzQgTDU1LjYzNTQ5NjIsNTkuMzEyNDQ3NCBDNTQuNTI0NzI4Miw1OS4zMTI0NDc0IDUzLjYyMzA5Niw2MC4yMTUxNDY0IDUzLjYyMzA5Niw2MS4zMjU5MTQ0IEw1My42MjMwOTYsODIuMzc5Mjg4MiBDNTMuNjIzMDk2LDgzLjQ5MDA1NjIgNTQuNTI0NzI4Miw4NC4zOTM4MjI0IDU1LjYzNTQ5NjIsODQuMzkzODIyNCBMNzIuNDMzNTkzNiw4NC4zOTM4MjI0IEw3Mi40MzM1OTM2LDExMC41NTA3NTMgQzcyLjQzMzU5MzYsMTEwLjU1MDc1MyA2OC42NjE2Nzc1LDExMS44MzY1MTMgNTguMjMzNjkwMiwxMTEuODM2NTEzIEM0NS45MzA5NDgsMTExLjgzNjUxMyAyOC43NDQ0NTUsMTA3LjM0MTE1NyAyOC43NDQ0NTUsNjkuNTQ5NDM4MiBDMjguNzQ0NDU1LDMxLjc0OTE4MzUgNDYuNjQwNTE2NSwyNi43NzU4MDI5IDYzLjQ0MTgxNTQsMjYuNzc1ODAyOSBDNzcuOTg1Mjk5NSwyNi43NzU4MDI5IDg0LjI1MDg0MTUsMjkuMzM2NjUxIDg4LjIzNzIyODgsMzAuNTcwMTI2NCBDODkuNDg5OTEwMywzMC45NTQyNTM3IDkwLjY0ODY5NCwyOS43MDY5MDcgOTAuNjQ4Njk0LDI4LjU5NTA3MjIgTDk1LjQ1MjQxODgsOC4yNTM0MDA2MiBDOTUuNDUyNDE4OCw3LjczMzc2MTgyIDk1LjI3NjM2MDMsNy4xMDc0MjEwMyA5NC42ODMwOTcxLDYuNjgxNjc5OTkgQzkzLjA2NDQyNzgsNS41MjcxNjQyMiA4My4xODcwMjI1LC0xLjQyMTA4NTQ3ZS0xNCA1OC4yMzM2OTAyLC0xLjQyMTA4NTQ3ZS0xNCBDMjkuNDg3MTAxLC0xLjQyMTA4NTQ3ZS0xNCAwLDEyLjIzMDE4NDYgMCw3MS4wMjI5OTMgQzAsMTI5LjgxNzkzNSAzMy43NjA1MTY1LDEzOC41NzkyMzggNjIuMjA5NDA2OCwxMzguNTc5MjM4IEM4NS43NjQ5NDMyLDEzOC41NzkyMzggMTAwLjA1NDQ3NiwxMjguNTEyOTcgMTAwLjA1NDQ3NiwxMjguNTEyOTcgQzEwMC42NDM0NzEsMTI4LjE4NzUyOSAxMDAuNzA3NDkzLDEyNy4zNjQ4NTYgMTAwLjcwNzQ5MywxMjYuOTg3MTMxIEwxMDAuNzA3NDkzLDYxLjMyNTkxNDQgQzEwMC43MDc0OTMsNjAuMjE1MTQ2NCA5OS44MDY5Mjc4LDU5LjMxMjQ0NzQgOTguNjk2MTU5OCw1OS4zMTI0NDc0IFogTTMyMC40OTU0OTcsNy4zNTkyMzc3NiBDMzIwLjQ5NTQ5Nyw2LjIzODg2NjY0IDMxOS42MDc3MzcsNS4zMzUxMDA1OSAzMTguNDk2OTY5LDUuMzM1MTAwNTkgTDI5NC4yNTEwNzIsNS4zMzUxMDA1OSBDMjkzLjE0MzUwMyw1LjMzNTEwMDU5IDI5Mi4yNDI5NCw2LjIzODg2NjY0IDI5Mi4yNDI5NCw3LjM1OTIzNzc2IEMyOTIuMjQyOTQsNy4zNjQ1NzI4OCAyOTIuMjQ5MzQsNTQuMjE1MjkyIDI5Mi4yNDkzNCw1NC4yMTUyOTIgTDI1NC40NTY1NTYsNTQuMjE1MjkyIEwyNTQuNDU2NTU2LDcuMzU5MjM3NzYgQzI1NC40NTY1NTYsNi4yMzg4NjY2NCAyNTMuNTY0NTI2LDUuMzM1MTAwNTkgMjUyLjQ1NTg5Myw1LjMzNTEwMDU5IEwyMjguMjExMDYxLDUuMzM1MTAwNTkgQzIyNy4xMDc3NjQsNS4zMzUxMDA1OSAyMjYuMjA4MjY1LDYuMjM4ODY2NjQgMjI2LjIwODI2NSw3LjM1OTIzNzc2IEwyMjYuMjA4MjY1LDEzNC4yMzExMzEgQzIyNi4yMDgyNjUsMTM1LjM1MDQzNSAyMjcuMTA3NzY0LDEzNi4yNjE2NyAyMjguMjExMDYxLDEzNi4yNjE2NyBMMjUyLjQ1NTg5MywxMzYuMjYxNjcgQzI1My41NjQ1MjYsMTM2LjI2MTY3IDI1NC40NTY1NTYsMTM1LjM1MDQzNSAyNTQuNDU2NTU2LDEzNC4yMzExMzEgTDI1NC40NTY1NTYsNzkuOTYzNTU0NyBMMjkyLjI0OTM0LDc5Ljk2MzU1NDcgQzI5Mi4yNDkzNCw3OS45NjM1NTQ3IDI5Mi4xODMxODcsMTM0LjIyNjg2MyAyOTIuMTgzMTg3LDEzNC4yMzExMzEgQzI5Mi4xODMxODcsMTM1LjM1MDQzNSAyOTMuMDgyNjg0LDEzNi4yNjE2NyAyOTQuMTkxMzE3LDEzNi4yNjE2NyBMMzE4LjQ5NDgzNSwxMzYuMjYxNjcgQzMxOS42MDU2MDQsMTM2LjI2MTY3IDMyMC40OTMzNjQsMTM1LjM1MDQzNSAzMjAuNDk1NDk3LDEzNC4yMzExMzEgTDMyMC40OTU0OTcsNy4zNTkyMzc3NiBaIE0xNDQuMzcxMDIzLDI0LjMyMTY1NjUgQzE0NC4zNzEwMjMsMTUuNTkxMjk4IDEzNy4zNzEzNzEsOC41MzYxNjA5NCAxMjguNzM1OTc3LDguNTM2MTYwOTQgQzEyMC4xMDkxMiw4LjUzNjE2MDk0IDExMy4xMDQxMzMsMTUuNTkxMjk4IDExMy4xMDQxMzMsMjQuMzIxNjU2NSBDMTEzLjEwNDEzMywzMy4wNDI0MTIgMTIwLjEwOTEyLDQwLjExNjc1NTQgMTI4LjczNTk3Nyw0MC4xMTY3NTU0IEMxMzcuMzcxMzcxLDQwLjExNjc1NTQgMTQ0LjM3MTAyMywzMy4wNDI0MTIgMTQ0LjM3MTAyMywyNC4zMjE2NTY1IFogTTE0Mi40NDcxODYsMTA3LjUzNDI4OCBMMTQyLjQ0NzE4Niw0OC45Njk4MjE0IEMxNDIuNDQ3MTg2LDQ3Ljg1Nzk4NjQgMTQxLjU0OTgyMiw0Ni45NDg4ODUyIDE0MC40NDExODgsNDYuOTQ4ODg1MiBMMTE2LjI3MjExNSw0Ni45NDg4ODUyIEMxMTUuMTYzNDgxLDQ2Ljk0ODg4NTIgMTE0LjE3MTE1Myw0OC4wOTI3MzA5IDExNC4xNzExNTMsNDkuMjA0NTY1NyBMMTE0LjE3MTE1MywxMzMuMTA5NjkzIEMxMTQuMTcxMTUzLDEzNS41NzU1NzYgMTE1LjcwNzY2MiwxMzYuMzA4NjE5IDExNy42OTY1ODcsMTM2LjMwODYxOSBMMTM5LjQ3MjMzNCwxMzYuMzA4NjE5IEMxNDEuODYxMzkyLDEzNi4zMDg2MTkgMTQyLjQ0NzE4NiwxMzUuMTM1OTY0IDE0Mi40NDcxODYsMTMzLjA3MDIxMyBMMTQyLjQ0NzE4NiwxMDcuNTM0Mjg4IFogTTQxMy4xNjE5MjksNDYuOTQ4ODg1MiBMMzg5LjEwMTY5LDQ2Ljk0ODg4NTIgQzM4Ny45OTgzODksNDYuOTQ4ODg1MiAzODcuMDk5OTYzLDQ3Ljg1Nzk4NjQgMzg3LjA5OTk2Myw0OC45NzcyOTA2IEwzODcuMDk5OTYzLDExMS4xODY2OTcgQzM4Ny4wOTk5NjMsMTExLjE4NjY5NyAzODAuOTg4MDY4LDExNS42NTg1NzkgMzcyLjMxMjEyOCwxMTUuNjU4NTc5IEMzNjMuNjM3MjU2LDExNS42NTg1NzkgMzYxLjMzNDYyNywxMTEuNzIyMzQxIDM2MS4zMzQ2MjcsMTAzLjIyNzc5NCBMMzYxLjMzNDYyNyw0OC45NzcyOTA2IEMzNjEuMzM0NjI3LDQ3Ljg1Nzk4NjQgMzYwLjQzODMzLDQ2Ljk0ODg4NTIgMzU5LjMzMzk2Miw0Ni45NDg4ODUyIEwzMzQuOTE1MjA2LDQ2Ljk0ODg4NTIgQzMzMy44MTI5NzgsNDYuOTQ4ODg1MiAzMzIuOTEwMjc3LDQ3Ljg1Nzk4NjQgMzMyLjkxMDI3Nyw0OC45NzcyOTA2IEwzMzIuOTEwMjc3LDEwNy4zMzU4MjIgQzMzMi45MTAyNzcsMTMyLjU2NjU3OSAzNDYuOTcyNTM3LDEzOC43MzkyOTEgMzY2LjMxNzYwOCwxMzguNzM5MjkxIEMzODIuMTg3NCwxMzguNzM5MjkxIDM5NC45ODMxMDYsMTI5Ljk3MTU4NyAzOTQuOTgzMTA2LDEyOS45NzE1ODcgQzM5NC45ODMxMDYsMTI5Ljk3MTU4NyAzOTUuNTkyMzc0LDEzNC41OTE3ODQgMzk1Ljg2NzY2NCwxMzUuMTQwMjMyIEMzOTYuMTQ0MDI0LDEzNS42ODY1NDYgMzk2Ljg2MjEyNSwxMzYuMjM4MTk2IDM5Ny42Mzc4NSwxMzYuMjM4MTk2IEw0MTMuMTcyNTk3LDEzNi4xNjk5MDYgQzQxNC4yNzQ4MjksMTM2LjE2OTkwNiA0MTUuMTc3NTI4LDEzNS4yNTg2NzEgNDE1LjE3NzUyOCwxMzQuMTQ0NzAyIEw0MTUuMTcwMDU5LDQ4Ljk3NzI5MDYgQzQxNS4xNzAwNTksNDcuODU3OTg2NCA0MTQuMjcwNTYsNDYuOTQ4ODg1MiA0MTMuMTYxOTI5LDQ2Ljk0ODg4NTIgWiBNNDY4LjU5NjgyMiwxMTUuNzA2NTk1IEM0NjAuMjUxNjYxLDExNS40NTI2NDQgNDU0LjU5MTExNiwxMTEuNjY1Nzg5IDQ1NC41OTExMTYsMTExLjY2NTc4OSBMNDU0LjU5MTExNiw3MS40ODgyMTM5IEM0NTQuNTkxMTE2LDcxLjQ4ODIxMzkgNDYwLjE3NTg5OCw2OC4wNjUyMTM0IDQ2Ny4wMjcyMzUsNjcuNDUyNzQzNyBDNDc1LjY5MTQ0MSw2Ni42NzcwMjAyIDQ4NC4wMzk4MDQsNjkuMjk0NDIwMyA0ODQuMDM5ODA0LDg5Ljk2MjYwMDIgQzQ4NC4wMzk4MDQsMTExLjc1NzU1MyA0ODAuMjcyMTU2LDExNi4wNTg3MTEgNDY4LjU5NjgyMiwxMTUuNzA2NTk1IFogTTQ3OC4wODY4OTksNDQuMjIzNzE1OSBDNDY0LjQyMTU3Myw0NC4yMjM3MTU5IDQ1NS4xMjY3Niw1MC4zMjA2Njg5IDQ1NS4xMjY3Niw1MC4zMjA2Njg5IEw0NTUuMTI2NzYsNy4zNTkyMzc3NiBDNDU1LjEyNjc2LDYuMjM4ODY2NjQgNDU0LjIzMTUzMiw1LjMzNTEwMDU5IDQ1My4xMjYwOTcsNS4zMzUxMDA1OSBMNDI4LjgxMTkxMyw1LjMzNTEwMDU5IEM0MjcuNzA2NDc5LDUuMzM1MTAwNTkgNDI2LjgwODA0OCw2LjIzODg2NjY0IDQyNi44MDgwNDgsNy4zNTkyMzc3NiBMNDI2LjgwODA0OCwxMzQuMjMxMTMxIEM0MjYuODA4MDQ4LDEzNS4zNTA0MzUgNDI3LjcwNjQ3OSwxMzYuMjYxNjcgNDI4LjgxNTExMiwxMzYuMjYxNjcgTDQ0NS42ODQ3MDIsMTM2LjI2MTY3IEM0NDYuNDQ0NDE3LDEzNi4yNjE2NyA0NDcuMDE5NTQyLDEzNS44NzAwNzQgNDQ3LjQ0NDIxNSwxMzUuMTgzOTggQzQ0Ny44NjM1NTUsMTM0LjUwMjE1NCA0NDguNDY4NTU3LDEyOS4zMzQ1NzUgNDQ4LjQ2ODU1NywxMjkuMzM0NTc1IEM0NDguNDY4NTU3LDEyOS4zMzQ1NzUgNDU4LjQxMTA1LDEzOC43NTYzNjMgNDc3LjIzMjIxNiwxMzguNzU2MzYzIEM0OTkuMzI4MDY5LDEzOC43NTYzNjMgNTEyLDEyNy41NDgzODQgNTEyLDg4LjQ0MTAyOTMgQzUxMiw0OS4zMzM2NzUyIDQ5MS43NjE4MjksNDQuMjIzNzE1OSA0NzguMDg2ODk5LDQ0LjIyMzcxNTkgWiBNMjEyLjIyOTIzNSw0Ni43MzEyMTMgTDE5NC4wNDE4NzYsNDYuNzMxMjEzIEMxOTQuMDQxODc2LDQ2LjczMTIxMyAxOTQuMDE0MTM0LDIyLjcwOTM4OTIgMTk0LjAxNDEzNCwyMi43MDQwNTQgQzE5NC4wMTQxMzQsMjEuNzk0OTUyOSAxOTMuNTQ1NzEyLDIxLjM0MDQwMjQgMTkyLjQ5NDY5NywyMS4zNDA0MDI0IEwxNjcuNzA5OTU0LDIxLjM0MDQwMjQgQzE2Ni43NDY0MzUsMjEuMzQwNDAyNCAxNjYuMjI4OTMsMjEuNzY0MDA5NCAxNjYuMjI4OTMsMjIuNjkwMTgyOSBMMTY2LjIyODkzLDQ3LjUxOTc0MDggQzE2Ni4yMjg5Myw0Ny41MTk3NDA4IDE1My44MDg4MTYsNTAuNTE4MDY3NSAxNTIuOTY5MDcxLDUwLjc2MDI4MSBDMTUyLjEzMjUyNyw1MS4wMDI0OTQ3IDE1MS41MTY4NTcsNTEuNzczOTUgMTUxLjUxNjg1Nyw1Mi42OTM3MjE1IEwxNTEuNTE2ODU3LDY4LjI5Njc1NjcgQzE1MS41MTY4NTcsNjkuNDE5MjYxOSAxNTIuNDEzMTU0LDcwLjMyNDA5NDggMTUzLjUyMTc4OCw3MC4zMjQwOTQ4IEwxNjYuMjI4OTMsNzAuMzI0MDk0OCBMMTY2LjIyODkzLDEwNy44NTk3MjkgQzE2Ni4yMjg5MywxMzUuNzM5ODk3IDE4NS43ODUyNzUsMTM4LjQ3ODkzOCAxOTguOTgyMTgsMTM4LjQ3ODkzOCBDMjA1LjAxMTkxMSwxMzguNDc4OTM4IDIxMi4yMjQ5NjYsMTM2LjU0MjI5NiAyMTMuNDE1NzYsMTM2LjEwMjY4NCBDMjE0LjEzNTk5OSwxMzUuODM4MDYzIDIxNC41NTQyNzEsMTM1LjA5MjIxNiAyMTQuNTU0MjcxLDEzNC4yODM0MTUgTDIxNC41NzQ1NDQsMTE3LjExOTMyOSBDMjE0LjU3NDU0NCwxMTYuMDAwMDI1IDIxMy42MjkxNjUsMTE1LjA5NDEyNSAyMTIuNTY0Mjc5LDExNS4wOTQxMjUgQzIxMS41MDQ3MjgsMTE1LjA5NDEyNSAyMDguNzkzNDMsMTE1LjUyNTIwMSAyMDYuMDAyMTA2LDExNS41MjUyMDEgQzE5Ny4wNjkwMTMsMTE1LjUyNTIwMSAxOTQuMDQxODc2LDExMS4zNzEyOTIgMTk0LjA0MTg3NiwxMDUuOTk0NTc3IEMxOTQuMDQxODc2LDEwMC42MjIxMzEgMTk0LjA0MDgxLDcwLjMyNDA5NDggMTk0LjA0MDgxLDcwLjMyNDA5NDggTDIxMi4yMjkyMzUsNzAuMzI0MDk0OCBDMjEzLjMzNzg2OCw3MC4zMjQwOTQ4IDIxNC4yMzUyMzMsNjkuNDE5MjYxOSAyMTQuMjM1MjMzLDY4LjI5Njc1NjcgTDIxNC4yMzUyMzMsNDguNzUzMjE2MiBDMjE0LjIzNTIzMyw0Ny42MzM5MTIgMjEzLjMzNzg2OCw0Ni43MzEyMTMgMjEyLjIyOTIzNSw0Ni43MzEyMTMgWiIgPjwvcGF0aD4KPC9nPgo8L3N2Zz4=",
+          "display_logo": true
+        },
+        "pages_appearance_mode": "dark",
+        "pages_background_color": "#252525",
+        "anonymize": false,
+        "loading_message": "",
+        "auto_submit": false,
+        "url_identifier": "277966760b295d26e7dccde3456a28f3"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Explode Stories",
+      "disabled": false,
+      "description": null,
+      "guid": "e8eb7d6c15c70e0df232aa7e6152b4a7",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "explode",
+        "path": "=ARRAY(get_story.body)",
+        "to": "story"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Set File Path",
+      "disabled": false,
+      "description": null,
+      "guid": "678eededfeb2829be0767b05acd30455",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "message_only",
+        "payload": "<<explode_stories.story.slug>>-<<explode_stories.story.team_id>>"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Export Story",
+      "disabled": false,
+      "description": null,
+      "guid": "ce0d6193bd32fc4ccc853e2402f0a96c",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://<<META.tenant.domain>>/api/v1/stories/<<explode_stories.story.id>>/export",
+        "content_type": "application_json",
+        "method": "get",
+        "payload": {},
+        "headers": {
+          "x-user-email": "<<RESOURCE.tines_api_email>>",
+          "x-user-token": "<<CREDENTIAL.tines_savkeker>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Create File Blob",
+      "disabled": false,
+      "description": null,
+      "guid": "a0aca2fc99812515788fa9862b8d4808",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://api.github.com/repos/<<RESOURCE.github_repo_owner>>/<<RESOURCE.github_repo>>/git/blobs",
+        "content_type": "application_json",
+        "method": "post",
+        "headers": {
+          "Authorization": "token <<CREDENTIAL.github>>"
+        },
+        "payload": {
+          "content": "<<BASE64_ENCODE(NEAT_JSON(export_story.body))>>",
+          "encoding": "base64"
+        },
+        "retry_on_status": [
+          "409"
+        ],
+        "log_error_on_status": [
+          "400-408",
+          "410-500"
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Create GitHub leaf",
+      "disabled": false,
+      "description": null,
+      "guid": "9a3d37c1ceb5be4f16aa3119f63822c4",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "path": "<<set_file_path>>/export.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "<<create_file_blob.body.sha>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Create README Blob",
+      "disabled": false,
+      "description": null,
+      "guid": "2d8f1f7547c7de8b2c77165a202fc000",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://api.github.com/repos/<<RESOURCE.github_repo_owner>>/<<RESOURCE.github_repo>>/git/blobs",
+        "content_type": "application_json",
+        "method": "post",
+        "headers": {
+          "Authorization": "token <<CREDENTIAL.github>>"
+        },
+        "payload": {
+          "content": "<<BASE64_ENCODE(explode_stories.story.description)>>",
+          "encoding": "base64"
+        },
+        "retry_on_status": [
+          "409"
+        ],
+        "log_error_on_status": [
+          "400-408",
+          "410-500"
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Create GitHub leaf",
+      "disabled": false,
+      "description": null,
+      "guid": "b8e006044a07a9b1c0f5d25ed4202823",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "path": "<<set_file_path>>/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "<<create_readme_blob.body.sha>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Exit STS",
+      "disabled": false,
+      "description": null,
+      "guid": "0173a7086a6c42ed5cdc190657780faf",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "body": "=push_the_github_commit.body",
+          "status": "=push_the_github_commit.status"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Get Main Branch of GitHub Repo",
+      "disabled": false,
+      "description": "Get GitHub repositories by username. A successful request will return an array of repositories.",
+      "guid": "ed58f6cc0317b70e1005e3575ef02f30",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://api.github.com/repos/<<RESOURCE.github_owner>>/<<RESOURCE.github_repo>>/branches/main",
+        "content_type": "application_json",
+        "method": "get",
+        "headers": {
+          "Authorization": "token <<CREDENTIAL.github>>"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "73244ae9ef03f5efcea05e63502f4fb454ba905d12e7d963d04ff3850c512c60",
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": "httpRequest"
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Create GitHub Blob Tree",
+      "disabled": false,
+      "description": null,
+      "guid": "0c980f5aa60c1c246fe5295f0b32cc72",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://api.github.com/repos/<<RESOURCE.github_owner>>/<<RESOURCE.github_repo>>/git/trees",
+        "content_type": "application_json",
+        "method": "post",
+        "headers": {
+          "Authorization": "token <<CREDENTIAL.github>>"
+        },
+        "payload": {
+          "base_tree": "<<get_main_branch_of_github_repo.body.commit.sha>>",
+          "tree": "=FLATTEN(chunk_commits.commit)"
+        },
+        "retry_on_status": [
+          "409"
+        ],
+        "log_error_on_status": [
+          "400-408",
+          "410-500"
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Commit the new GitHub Tree",
+      "disabled": false,
+      "description": null,
+      "guid": "920755d38070738310b4d1aa23f117cf",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://api.github.com/repos/<<RESOURCE.github_owner>>/<<RESOURCE.github_repo>>/git/commits",
+        "content_type": "application_json",
+        "method": "post",
+        "headers": {
+          "Authorization": "token <<CREDENTIAL.github>>"
+        },
+        "payload": {
+          "message": "<<backup_tines_story_to_github.body.commit>>",
+          "parents": [
+            "<<get_main_branch_of_github_repo.body.commit.sha>>"
+          ],
+          "tree": "<<create_github_blob_tree.body.sha>>"
+        },
+        "retry_on_status": [
+          "409"
+        ],
+        "log_error_on_status": [
+          "400-408",
+          "410-500"
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Push the GitHub Commit",
+      "disabled": false,
+      "description": null,
+      "guid": "5a433526bd2ecdb5798b5bad12e3a72d",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "url": "https://api.github.com/repos/<<RESOURCE.github_owner>>/<<RESOURCE.github_repo>>/git/refs/heads/main",
+        "content_type": "application_json",
+        "method": "patch",
+        "headers": {
+          "Authorization": "token <<CREDENTIAL.github>>"
+        },
+        "payload": {
+          "sha": "<<commit_the_new_github_tree.body.sha>>",
+          "force": true
+        },
+        "retry_on_status": [
+          "409"
+        ],
+        "log_error_on_status": [
+          "400-408",
+          "410-500"
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Implode Leafs",
+      "disabled": false,
+      "description": null,
+      "guid": "1fa1abf97a5ac4e94cbe2f0f055a921d",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "implode",
+        "item_path": "=create_github_leaf",
+        "guid_path": "=explode_stories.guid",
+        "size_path": "=explode_stories.size * 2"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Chunk Commits",
+      "disabled": false,
+      "description": null,
+      "guid": "098e35021f1e14ee8f3f629616abd456",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "explode",
+        "path": "=CHUNK_ARRAY(implode_leafs, 25)",
+        "to": "commit",
+        "limit": "500"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Throttle Commits",
+      "disabled": false,
+      "description": null,
+      "guid": "73070947d4cc136b8de88cec001e356b",
+      "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+      "options": {
+        "mode": "throttle",
+        "capacity": "6"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    }
+  ],
+  "diagram_notes": [
+    {
+      "content": "# Running This Story\n\nThis Story is called through a Send To Story Action, which passes through either the `story_id` of the Story to backed up, or the keyword `all` which will backup all Stories.",
+      "position": [
+        2128.0,
+        -586.0
+      ],
+      "guid": "02336accab86e89298aade4dd32f2226",
+      "width": null
+    },
+    {
+      "content": "# Export The Story\n\nOnce the list of Stories has been received, the Tines Export Story API is used to export the Story as JSON.",
+      "position": [
+        1633.0,
+        14.0
+      ],
+      "guid": "9d2cdd34480266bb8b2c197faa239660",
+      "width": null
+    },
+    {
+      "content": "# Committing the Exports\n\nThe file blob tree is pushed to GitHub. This tells GitHub how to organise the file blobs created earlier.\n\nAfter this is pushed, the tree is committed in a single commit message and a push request is sent to GitHub.",
+      "position": [
+        1680.0,
+        1050.0
+      ],
+      "guid": "91ae3dd9b78d0439daa78888e14eca92",
+      "width": null
+    },
+    {
+      "content": "https://www.tines.com/api/story-library/thumbnail/87728\n\nExports stories to Github. The story features a form that can be used ad hoc to backup stories.\n\nThe Send to Story Action can be scheduled to run routine story backups.\n\nIndividual stories can be backed up by using their Story ID, or the argument 'all' for Story ID will backup all stories that can be accessed.\n\nBackups are stored in folders named for their reference slug and the Team ID they are present in.",
+      "position": [
+        1483.0,
+        -586.0
+      ],
+      "guid": "0bfff31dea5e97299a3f56152a8587bb",
+      "width": 262
+    },
+    {
+      "content": "# **Requirements**\n\n## **Credentials:**\n - [ ] `github` - GitHub OAuth app with the scope:\n    - `repo user`\n - [ ] `tines_user_token` - Tines personal API token\n\n## **Resources:**\n - [ ] `tines_api_email` - Email associated with the Tines user token\n - [ ] `github_repo` - GitHub repository name\n - [ ] `github_repo_owner` - GitHub username of repository owner",
+      "position": [
+        1183.0,
+        -586.0
+      ],
+      "guid": "f41930c0643eb72e8aef297ee28fae67",
+      "width": null
+    },
+    {
+      "content": "# Building the GitHub Tree\n\nFile blobs are created for each story in GitHub. A leaf is then created for each file blob which includes it's location in the repository. Each export and README file have their own blobs and leafs.\n\nThese leafs are then imploded into an array to create a file directory tree.\n",
+      "position": [
+        2353.0,
+        239.0
+      ],
+      "guid": "9cc8ff37960acad6df81e8411513483d",
+      "width": 264
+    }
+  ],
+  "links": [
+    {
+      "source": 0,
+      "receiver": 7
+    },
+    {
+      "source": 1,
+      "receiver": 3
+    },
+    {
+      "source": 3,
+      "receiver": 4
+    },
+    {
+      "source": 3,
+      "receiver": 0,
+      "secondary": true
+    },
+    {
+      "source": 4,
+      "receiver": 5
+    },
+    {
+      "source": 5,
+      "receiver": 9
+    },
+    {
+      "source": 6,
+      "receiver": 3
+    },
+    {
+      "source": 7,
+      "receiver": 9
+    },
+    {
+      "source": 8,
+      "receiver": 12
+    },
+    {
+      "source": 8,
+      "receiver": 10
+    },
+    {
+      "source": 9,
+      "receiver": 8
+    },
+    {
+      "source": 10,
+      "receiver": 11
+    },
+    {
+      "source": 11,
+      "receiver": 19
+    },
+    {
+      "source": 12,
+      "receiver": 13
+    },
+    {
+      "source": 13,
+      "receiver": 19
+    },
+    {
+      "source": 15,
+      "receiver": 16
+    },
+    {
+      "source": 16,
+      "receiver": 17
+    },
+    {
+      "source": 17,
+      "receiver": 18
+    },
+    {
+      "source": 18,
+      "receiver": 14
+    },
+    {
+      "source": 19,
+      "receiver": 20
+    },
+    {
+      "source": 20,
+      "receiver": 21
+    },
+    {
+      "source": 21,
+      "receiver": 15
+    }
+  ],
+  "diagram_layout": "{\"fee2324752208d8af53b7835bff1a868\":[2130,-195],\"e6b3aa27821dd6058a275a11e2ad6fa8\":[2130,-405],\"394c59133c66dd37e425522bdbe89095\":[1185,-195],\"ddd830c0136b9db9c0aba7214609d2d4\":[1980,-300],\"5dd1c21ae44b1977ecc89e364c9f3c35\":[1830,-195],\"b8622cf858724964463d471d1c12e9fd\":[1830,-90],\"c7c86004b14cd4ba8e58ac96c2ade409\":[1830,-600],\"e8eb7d6c15c70e0df232aa7e6152b4a7\":[2130,-90],\"678eededfeb2829be0767b05acd30455\":[1980,120],\"ce0d6193bd32fc4ccc853e2402f0a96c\":[1980,15],\"a0aca2fc99812515788fa9862b8d4808\":[1830,240],\"9a3d37c1ceb5be4f16aa3119f63822c4\":[1830,345],\"2d8f1f7547c7de8b2c77165a202fc000\":[2130,240],\"b8e006044a07a9b1c0f5d25ed4202823\":[2130,345],\"0173a7086a6c42ed5cdc190657780faf\":[1980,1320],\"ed58f6cc0317b70e1005e3575ef02f30\":[1980,825],\"0c980f5aa60c1c246fe5295f0b32cc72\":[1980,960],\"920755d38070738310b4d1aa23f117cf\":[1980,1080],\"5a433526bd2ecdb5798b5bad12e3a72d\":[1980,1200],\"1fa1abf97a5ac4e94cbe2f0f055a921d\":[1980,465],\"098e35021f1e14ee8f3f629616abd456\":[1980,585],\"73070947d4cc136b8de88cec001e356b\":[1980,705]}",
+  "send_to_story_enabled": true,
+  "entry_agent_guid": "e6b3aa27821dd6058a275a11e2ad6fa8",
+  "exit_agent_guids": [
+    "0173a7086a6c42ed5cdc190657780faf"
+  ],
+  "exit_agent_guid": "0173a7086a6c42ed5cdc190657780faf",
+  "api_entry_action_guids": [],
+  "api_exit_action_guids": [],
+  "keep_events_for": 86400,
+  "reporting_status": true,
+  "send_to_story_access": "team",
+  "story_library_metadata": {
+    "tags": [
+      "Intermediate",
+      "Internal",
+      "GitHub",
+      "Backup"
+    ],
+    "icons": [
+      "tines",
+      "➡️",
+      "github"
+    ],
+    "visibility": "public"
+  },
+  "monitor_failures": false,
+  "send_to_stories": [],
+  "form": {
+    "fields": [
+      {
+        "name": "Backup Tines Story to Github",
+        "description": "",
+        "required": false,
+        "type": "TITLE",
+        "multi_select": false,
+        "options": [
+          "Option 1",
+          "Option 2"
+        ],
+        "ranking": 0,
+        "max_characters": null,
+        "default_value": null,
+        "content": "Backup Tines Story to Github"
+      },
+      {
+        "name": "Story ID",
+        "description": "Set \"All\" to export all stories.",
+        "required": true,
+        "type": "SHORT_TEXT",
+        "multi_select": false,
+        "options": [
+          "Option 1",
+          "Option 2"
+        ],
+        "ranking": 1073741824,
+        "max_characters": null,
+        "default_value": null,
+        "content": null
+      },
+      {
+        "name": "Commit Message",
+        "description": "",
+        "required": false,
+        "type": "SHORT_TEXT",
+        "multi_select": false,
+        "options": [
+          "Option 1",
+          "Option 2"
+        ],
+        "ranking": 1610612736,
+        "max_characters": null,
+        "default_value": null,
+        "content": null
+      },
+      {
+        "name": "Submit form",
+        "description": "",
+        "required": false,
+        "type": "BUTTON",
+        "multi_select": false,
+        "options": [
+          "Option 1",
+          "Option 2"
+        ],
+        "ranking": 1879048192,
+        "max_characters": null,
+        "default_value": null,
+        "content": "Submit form"
+      }
+    ],
+    "visibility": "tenant",
+    "agent_guid": "c7c86004b14cd4ba8e58ac96c2ade409",
+    "success_message": "",
+    "loading_message": ""
+  },
+  "synchronous_webhooks_enabled": false,
+  "forms": [
+    {
+      "fields": [
+        {
+          "name": "Backup Tines Story to Github",
+          "description": "",
+          "required": false,
+          "type": "TITLE",
+          "multi_select": false,
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "ranking": 0,
+          "max_characters": null,
+          "default_value": null,
+          "content": "Backup Tines Story to Github"
+        },
+        {
+          "name": "Story ID",
+          "description": "Set \"All\" to export all stories.",
+          "required": true,
+          "type": "SHORT_TEXT",
+          "multi_select": false,
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "ranking": 1073741824,
+          "max_characters": null,
+          "default_value": null,
+          "content": null
+        },
+        {
+          "name": "Commit Message",
+          "description": "",
+          "required": false,
+          "type": "SHORT_TEXT",
+          "multi_select": false,
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "ranking": 1610612736,
+          "max_characters": null,
+          "default_value": null,
+          "content": null
+        },
+        {
+          "name": "Submit form",
+          "description": "",
+          "required": false,
+          "type": "BUTTON",
+          "multi_select": false,
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "ranking": 1879048192,
+          "max_characters": null,
+          "default_value": null,
+          "content": "Submit form"
+        }
+      ],
+      "visibility": "tenant",
+      "agent_guid": "c7c86004b14cd4ba8e58ac96c2ade409",
+      "success_message": "",
+      "loading_message": ""
+    }
+  ],
+  "pages": [
+    {
+      "containers": [
+        {
+          "guid": "7728d20852f5ff2461106c3f3544ead8",
+          "ranking": 0
+        },
+        {
+          "guid": "d48d8aa8b6b65951e48a6e5ad061ccba",
+          "ranking": 1073741824
+        },
+        {
+          "guid": "5088dd2f14a4ddadd0480d2ec63fa182",
+          "ranking": 1610612736
+        },
+        {
+          "guid": "313a0fa888359d29538236a02bc284c2",
+          "ranking": 1879048192
+        }
+      ],
+      "fields": [
+        {
+          "name": "Backup Tines Story to Github",
+          "description": "",
+          "required": false,
+          "type": "TITLE",
+          "multi_select": false,
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "ranking": 0,
+          "max_characters": null,
+          "default_value": null,
+          "content": "Backup Tines Story to Github",
+          "validation_pattern": null,
+          "style": null,
+          "container_guid": "7728d20852f5ff2461106c3f3544ead8"
+        },
+        {
+          "name": "Story ID",
+          "description": "Set \"All\" to export all stories.",
+          "required": true,
+          "type": "SHORT_TEXT",
+          "multi_select": false,
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "ranking": 1073741824,
+          "max_characters": null,
+          "default_value": null,
+          "content": null,
+          "validation_pattern": null,
+          "style": null,
+          "container_guid": "d48d8aa8b6b65951e48a6e5ad061ccba"
+        },
+        {
+          "name": "Commit Message",
+          "description": "",
+          "required": false,
+          "type": "SHORT_TEXT",
+          "multi_select": false,
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "ranking": 1610612736,
+          "max_characters": null,
+          "default_value": null,
+          "content": null,
+          "validation_pattern": null,
+          "style": null,
+          "container_guid": "5088dd2f14a4ddadd0480d2ec63fa182"
+        },
+        {
+          "name": "Submit form",
+          "description": "",
+          "required": false,
+          "type": "BUTTON",
+          "multi_select": false,
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "ranking": 1879048192,
+          "max_characters": null,
+          "default_value": null,
+          "content": "Submit form",
+          "validation_pattern": null,
+          "style": null,
+          "container_guid": "313a0fa888359d29538236a02bc284c2"
+        }
+      ],
+      "visibility": "tenant",
+      "agent_guid": "c7c86004b14cd4ba8e58ac96c2ade409",
+      "success_message": "",
+      "loading_message": "",
+      "logo_contents": "PHN2ZyBmaWxsPSJ3aGl0ZSIgaGVpZ2h0PSIxMzlweCIgcHJlc2VydmVhc3Bl\nY3RyYXRpbz0ieE1pZFlNaWQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAw\nIDUxMiAxMzkiIHdpZHRoPSI1MTJweCIgeG1sbnM9Imh0dHA6Ly93d3cudzMu\nb3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv\nMTk5OS94bGluayI+CjxnIGZpbGw9IndoaXRlIj4KPHBhdGggZmlsbD0id2hp\ndGUiIGQ9Ik05OC42OTYxNTk4LDU5LjMxMjQ0NzQgTDU1LjYzNTQ5NjIsNTku\nMzEyNDQ3NCBDNTQuNTI0NzI4Miw1OS4zMTI0NDc0IDUzLjYyMzA5Niw2MC4y\nMTUxNDY0IDUzLjYyMzA5Niw2MS4zMjU5MTQ0IEw1My42MjMwOTYsODIuMzc5\nMjg4MiBDNTMuNjIzMDk2LDgzLjQ5MDA1NjIgNTQuNTI0NzI4Miw4NC4zOTM4\nMjI0IDU1LjYzNTQ5NjIsODQuMzkzODIyNCBMNzIuNDMzNTkzNiw4NC4zOTM4\nMjI0IEw3Mi40MzM1OTM2LDExMC41NTA3NTMgQzcyLjQzMzU5MzYsMTEwLjU1\nMDc1MyA2OC42NjE2Nzc1LDExMS44MzY1MTMgNTguMjMzNjkwMiwxMTEuODM2\nNTEzIEM0NS45MzA5NDgsMTExLjgzNjUxMyAyOC43NDQ0NTUsMTA3LjM0MTE1\nNyAyOC43NDQ0NTUsNjkuNTQ5NDM4MiBDMjguNzQ0NDU1LDMxLjc0OTE4MzUg\nNDYuNjQwNTE2NSwyNi43NzU4MDI5IDYzLjQ0MTgxNTQsMjYuNzc1ODAyOSBD\nNzcuOTg1Mjk5NSwyNi43NzU4MDI5IDg0LjI1MDg0MTUsMjkuMzM2NjUxIDg4\nLjIzNzIyODgsMzAuNTcwMTI2NCBDODkuNDg5OTEwMywzMC45NTQyNTM3IDkw\nLjY0ODY5NCwyOS43MDY5MDcgOTAuNjQ4Njk0LDI4LjU5NTA3MjIgTDk1LjQ1\nMjQxODgsOC4yNTM0MDA2MiBDOTUuNDUyNDE4OCw3LjczMzc2MTgyIDk1LjI3\nNjM2MDMsNy4xMDc0MjEwMyA5NC42ODMwOTcxLDYuNjgxNjc5OTkgQzkzLjA2\nNDQyNzgsNS41MjcxNjQyMiA4My4xODcwMjI1LC0xLjQyMTA4NTQ3ZS0xNCA1\nOC4yMzM2OTAyLC0xLjQyMTA4NTQ3ZS0xNCBDMjkuNDg3MTAxLC0xLjQyMTA4\nNTQ3ZS0xNCAwLDEyLjIzMDE4NDYgMCw3MS4wMjI5OTMgQzAsMTI5LjgxNzkz\nNSAzMy43NjA1MTY1LDEzOC41NzkyMzggNjIuMjA5NDA2OCwxMzguNTc5MjM4\nIEM4NS43NjQ5NDMyLDEzOC41NzkyMzggMTAwLjA1NDQ3NiwxMjguNTEyOTcg\nMTAwLjA1NDQ3NiwxMjguNTEyOTcgQzEwMC42NDM0NzEsMTI4LjE4NzUyOSAx\nMDAuNzA3NDkzLDEyNy4zNjQ4NTYgMTAwLjcwNzQ5MywxMjYuOTg3MTMxIEwx\nMDAuNzA3NDkzLDYxLjMyNTkxNDQgQzEwMC43MDc0OTMsNjAuMjE1MTQ2NCA5\nOS44MDY5Mjc4LDU5LjMxMjQ0NzQgOTguNjk2MTU5OCw1OS4zMTI0NDc0IFog\nTTMyMC40OTU0OTcsNy4zNTkyMzc3NiBDMzIwLjQ5NTQ5Nyw2LjIzODg2NjY0\nIDMxOS42MDc3MzcsNS4zMzUxMDA1OSAzMTguNDk2OTY5LDUuMzM1MTAwNTkg\nTDI5NC4yNTEwNzIsNS4zMzUxMDA1OSBDMjkzLjE0MzUwMyw1LjMzNTEwMDU5\nIDI5Mi4yNDI5NCw2LjIzODg2NjY0IDI5Mi4yNDI5NCw3LjM1OTIzNzc2IEMy\nOTIuMjQyOTQsNy4zNjQ1NzI4OCAyOTIuMjQ5MzQsNTQuMjE1MjkyIDI5Mi4y\nNDkzNCw1NC4yMTUyOTIgTDI1NC40NTY1NTYsNTQuMjE1MjkyIEwyNTQuNDU2\nNTU2LDcuMzU5MjM3NzYgQzI1NC40NTY1NTYsNi4yMzg4NjY2NCAyNTMuNTY0\nNTI2LDUuMzM1MTAwNTkgMjUyLjQ1NTg5Myw1LjMzNTEwMDU5IEwyMjguMjEx\nMDYxLDUuMzM1MTAwNTkgQzIyNy4xMDc3NjQsNS4zMzUxMDA1OSAyMjYuMjA4\nMjY1LDYuMjM4ODY2NjQgMjI2LjIwODI2NSw3LjM1OTIzNzc2IEwyMjYuMjA4\nMjY1LDEzNC4yMzExMzEgQzIyNi4yMDgyNjUsMTM1LjM1MDQzNSAyMjcuMTA3\nNzY0LDEzNi4yNjE2NyAyMjguMjExMDYxLDEzNi4yNjE2NyBMMjUyLjQ1NTg5\nMywxMzYuMjYxNjcgQzI1My41NjQ1MjYsMTM2LjI2MTY3IDI1NC40NTY1NTYs\nMTM1LjM1MDQzNSAyNTQuNDU2NTU2LDEzNC4yMzExMzEgTDI1NC40NTY1NTYs\nNzkuOTYzNTU0NyBMMjkyLjI0OTM0LDc5Ljk2MzU1NDcgQzI5Mi4yNDkzNCw3\nOS45NjM1NTQ3IDI5Mi4xODMxODcsMTM0LjIyNjg2MyAyOTIuMTgzMTg3LDEz\nNC4yMzExMzEgQzI5Mi4xODMxODcsMTM1LjM1MDQzNSAyOTMuMDgyNjg0LDEz\nNi4yNjE2NyAyOTQuMTkxMzE3LDEzNi4yNjE2NyBMMzE4LjQ5NDgzNSwxMzYu\nMjYxNjcgQzMxOS42MDU2MDQsMTM2LjI2MTY3IDMyMC40OTMzNjQsMTM1LjM1\nMDQzNSAzMjAuNDk1NDk3LDEzNC4yMzExMzEgTDMyMC40OTU0OTcsNy4zNTky\nMzc3NiBaIE0xNDQuMzcxMDIzLDI0LjMyMTY1NjUgQzE0NC4zNzEwMjMsMTUu\nNTkxMjk4IDEzNy4zNzEzNzEsOC41MzYxNjA5NCAxMjguNzM1OTc3LDguNTM2\nMTYwOTQgQzEyMC4xMDkxMiw4LjUzNjE2MDk0IDExMy4xMDQxMzMsMTUuNTkx\nMjk4IDExMy4xMDQxMzMsMjQuMzIxNjU2NSBDMTEzLjEwNDEzMywzMy4wNDI0\nMTIgMTIwLjEwOTEyLDQwLjExNjc1NTQgMTI4LjczNTk3Nyw0MC4xMTY3NTU0\nIEMxMzcuMzcxMzcxLDQwLjExNjc1NTQgMTQ0LjM3MTAyMywzMy4wNDI0MTIg\nMTQ0LjM3MTAyMywyNC4zMjE2NTY1IFogTTE0Mi40NDcxODYsMTA3LjUzNDI4\nOCBMMTQyLjQ0NzE4Niw0OC45Njk4MjE0IEMxNDIuNDQ3MTg2LDQ3Ljg1Nzk4\nNjQgMTQxLjU0OTgyMiw0Ni45NDg4ODUyIDE0MC40NDExODgsNDYuOTQ4ODg1\nMiBMMTE2LjI3MjExNSw0Ni45NDg4ODUyIEMxMTUuMTYzNDgxLDQ2Ljk0ODg4\nNTIgMTE0LjE3MTE1Myw0OC4wOTI3MzA5IDExNC4xNzExNTMsNDkuMjA0NTY1\nNyBMMTE0LjE3MTE1MywxMzMuMTA5NjkzIEMxMTQuMTcxMTUzLDEzNS41NzU1\nNzYgMTE1LjcwNzY2MiwxMzYuMzA4NjE5IDExNy42OTY1ODcsMTM2LjMwODYx\nOSBMMTM5LjQ3MjMzNCwxMzYuMzA4NjE5IEMxNDEuODYxMzkyLDEzNi4zMDg2\nMTkgMTQyLjQ0NzE4NiwxMzUuMTM1OTY0IDE0Mi40NDcxODYsMTMzLjA3MDIx\nMyBMMTQyLjQ0NzE4NiwxMDcuNTM0Mjg4IFogTTQxMy4xNjE5MjksNDYuOTQ4\nODg1MiBMMzg5LjEwMTY5LDQ2Ljk0ODg4NTIgQzM4Ny45OTgzODksNDYuOTQ4\nODg1MiAzODcuMDk5OTYzLDQ3Ljg1Nzk4NjQgMzg3LjA5OTk2Myw0OC45Nzcy\nOTA2IEwzODcuMDk5OTYzLDExMS4xODY2OTcgQzM4Ny4wOTk5NjMsMTExLjE4\nNjY5NyAzODAuOTg4MDY4LDExNS42NTg1NzkgMzcyLjMxMjEyOCwxMTUuNjU4\nNTc5IEMzNjMuNjM3MjU2LDExNS42NTg1NzkgMzYxLjMzNDYyNywxMTEuNzIy\nMzQxIDM2MS4zMzQ2MjcsMTAzLjIyNzc5NCBMMzYxLjMzNDYyNyw0OC45Nzcy\nOTA2IEMzNjEuMzM0NjI3LDQ3Ljg1Nzk4NjQgMzYwLjQzODMzLDQ2Ljk0ODg4\nNTIgMzU5LjMzMzk2Miw0Ni45NDg4ODUyIEwzMzQuOTE1MjA2LDQ2Ljk0ODg4\nNTIgQzMzMy44MTI5NzgsNDYuOTQ4ODg1MiAzMzIuOTEwMjc3LDQ3Ljg1Nzk4\nNjQgMzMyLjkxMDI3Nyw0OC45NzcyOTA2IEwzMzIuOTEwMjc3LDEwNy4zMzU4\nMjIgQzMzMi45MTAyNzcsMTMyLjU2NjU3OSAzNDYuOTcyNTM3LDEzOC43Mzky\nOTEgMzY2LjMxNzYwOCwxMzguNzM5MjkxIEMzODIuMTg3NCwxMzguNzM5Mjkx\nIDM5NC45ODMxMDYsMTI5Ljk3MTU4NyAzOTQuOTgzMTA2LDEyOS45NzE1ODcg\nQzM5NC45ODMxMDYsMTI5Ljk3MTU4NyAzOTUuNTkyMzc0LDEzNC41OTE3ODQg\nMzk1Ljg2NzY2NCwxMzUuMTQwMjMyIEMzOTYuMTQ0MDI0LDEzNS42ODY1NDYg\nMzk2Ljg2MjEyNSwxMzYuMjM4MTk2IDM5Ny42Mzc4NSwxMzYuMjM4MTk2IEw0\nMTMuMTcyNTk3LDEzNi4xNjk5MDYgQzQxNC4yNzQ4MjksMTM2LjE2OTkwNiA0\nMTUuMTc3NTI4LDEzNS4yNTg2NzEgNDE1LjE3NzUyOCwxMzQuMTQ0NzAyIEw0\nMTUuMTcwMDU5LDQ4Ljk3NzI5MDYgQzQxNS4xNzAwNTksNDcuODU3OTg2NCA0\nMTQuMjcwNTYsNDYuOTQ4ODg1MiA0MTMuMTYxOTI5LDQ2Ljk0ODg4NTIgWiBN\nNDY4LjU5NjgyMiwxMTUuNzA2NTk1IEM0NjAuMjUxNjYxLDExNS40NTI2NDQg\nNDU0LjU5MTExNiwxMTEuNjY1Nzg5IDQ1NC41OTExMTYsMTExLjY2NTc4OSBM\nNDU0LjU5MTExNiw3MS40ODgyMTM5IEM0NTQuNTkxMTE2LDcxLjQ4ODIxMzkg\nNDYwLjE3NTg5OCw2OC4wNjUyMTM0IDQ2Ny4wMjcyMzUsNjcuNDUyNzQzNyBD\nNDc1LjY5MTQ0MSw2Ni42NzcwMjAyIDQ4NC4wMzk4MDQsNjkuMjk0NDIwMyA0\nODQuMDM5ODA0LDg5Ljk2MjYwMDIgQzQ4NC4wMzk4MDQsMTExLjc1NzU1MyA0\nODAuMjcyMTU2LDExNi4wNTg3MTEgNDY4LjU5NjgyMiwxMTUuNzA2NTk1IFog\nTTQ3OC4wODY4OTksNDQuMjIzNzE1OSBDNDY0LjQyMTU3Myw0NC4yMjM3MTU5\nIDQ1NS4xMjY3Niw1MC4zMjA2Njg5IDQ1NS4xMjY3Niw1MC4zMjA2Njg5IEw0\nNTUuMTI2NzYsNy4zNTkyMzc3NiBDNDU1LjEyNjc2LDYuMjM4ODY2NjQgNDU0\nLjIzMTUzMiw1LjMzNTEwMDU5IDQ1My4xMjYwOTcsNS4zMzUxMDA1OSBMNDI4\nLjgxMTkxMyw1LjMzNTEwMDU5IEM0MjcuNzA2NDc5LDUuMzM1MTAwNTkgNDI2\nLjgwODA0OCw2LjIzODg2NjY0IDQyNi44MDgwNDgsNy4zNTkyMzc3NiBMNDI2\nLjgwODA0OCwxMzQuMjMxMTMxIEM0MjYuODA4MDQ4LDEzNS4zNTA0MzUgNDI3\nLjcwNjQ3OSwxMzYuMjYxNjcgNDI4LjgxNTExMiwxMzYuMjYxNjcgTDQ0NS42\nODQ3MDIsMTM2LjI2MTY3IEM0NDYuNDQ0NDE3LDEzNi4yNjE2NyA0NDcuMDE5\nNTQyLDEzNS44NzAwNzQgNDQ3LjQ0NDIxNSwxMzUuMTgzOTggQzQ0Ny44NjM1\nNTUsMTM0LjUwMjE1NCA0NDguNDY4NTU3LDEyOS4zMzQ1NzUgNDQ4LjQ2ODU1\nNywxMjkuMzM0NTc1IEM0NDguNDY4NTU3LDEyOS4zMzQ1NzUgNDU4LjQxMTA1\nLDEzOC43NTYzNjMgNDc3LjIzMjIxNiwxMzguNzU2MzYzIEM0OTkuMzI4MDY5\nLDEzOC43NTYzNjMgNTEyLDEyNy41NDgzODQgNTEyLDg4LjQ0MTAyOTMgQzUx\nMiw0OS4zMzM2NzUyIDQ5MS43NjE4MjksNDQuMjIzNzE1OSA0NzguMDg2ODk5\nLDQ0LjIyMzcxNTkgWiBNMjEyLjIyOTIzNSw0Ni43MzEyMTMgTDE5NC4wNDE4\nNzYsNDYuNzMxMjEzIEMxOTQuMDQxODc2LDQ2LjczMTIxMyAxOTQuMDE0MTM0\nLDIyLjcwOTM4OTIgMTk0LjAxNDEzNCwyMi43MDQwNTQgQzE5NC4wMTQxMzQs\nMjEuNzk0OTUyOSAxOTMuNTQ1NzEyLDIxLjM0MDQwMjQgMTkyLjQ5NDY5Nywy\nMS4zNDA0MDI0IEwxNjcuNzA5OTU0LDIxLjM0MDQwMjQgQzE2Ni43NDY0MzUs\nMjEuMzQwNDAyNCAxNjYuMjI4OTMsMjEuNzY0MDA5NCAxNjYuMjI4OTMsMjIu\nNjkwMTgyOSBMMTY2LjIyODkzLDQ3LjUxOTc0MDggQzE2Ni4yMjg5Myw0Ny41\nMTk3NDA4IDE1My44MDg4MTYsNTAuNTE4MDY3NSAxNTIuOTY5MDcxLDUwLjc2\nMDI4MSBDMTUyLjEzMjUyNyw1MS4wMDI0OTQ3IDE1MS41MTY4NTcsNTEuNzcz\nOTUgMTUxLjUxNjg1Nyw1Mi42OTM3MjE1IEwxNTEuNTE2ODU3LDY4LjI5Njc1\nNjcgQzE1MS41MTY4NTcsNjkuNDE5MjYxOSAxNTIuNDEzMTU0LDcwLjMyNDA5\nNDggMTUzLjUyMTc4OCw3MC4zMjQwOTQ4IEwxNjYuMjI4OTMsNzAuMzI0MDk0\nOCBMMTY2LjIyODkzLDEwNy44NTk3MjkgQzE2Ni4yMjg5MywxMzUuNzM5ODk3\nIDE4NS43ODUyNzUsMTM4LjQ3ODkzOCAxOTguOTgyMTgsMTM4LjQ3ODkzOCBD\nMjA1LjAxMTkxMSwxMzguNDc4OTM4IDIxMi4yMjQ5NjYsMTM2LjU0MjI5NiAy\nMTMuNDE1NzYsMTM2LjEwMjY4NCBDMjE0LjEzNTk5OSwxMzUuODM4MDYzIDIx\nNC41NTQyNzEsMTM1LjA5MjIxNiAyMTQuNTU0MjcxLDEzNC4yODM0MTUgTDIx\nNC41NzQ1NDQsMTE3LjExOTMyOSBDMjE0LjU3NDU0NCwxMTYuMDAwMDI1IDIx\nMy42MjkxNjUsMTE1LjA5NDEyNSAyMTIuNTY0Mjc5LDExNS4wOTQxMjUgQzIx\nMS41MDQ3MjgsMTE1LjA5NDEyNSAyMDguNzkzNDMsMTE1LjUyNTIwMSAyMDYu\nMDAyMTA2LDExNS41MjUyMDEgQzE5Ny4wNjkwMTMsMTE1LjUyNTIwMSAxOTQu\nMDQxODc2LDExMS4zNzEyOTIgMTk0LjA0MTg3NiwxMDUuOTk0NTc3IEMxOTQu\nMDQxODc2LDEwMC42MjIxMzEgMTk0LjA0MDgxLDcwLjMyNDA5NDggMTk0LjA0\nMDgxLDcwLjMyNDA5NDggTDIxMi4yMjkyMzUsNzAuMzI0MDk0OCBDMjEzLjMz\nNzg2OCw3MC4zMjQwOTQ4IDIxNC4yMzUyMzMsNjkuNDE5MjYxOSAyMTQuMjM1\nMjMzLDY4LjI5Njc1NjcgTDIxNC4yMzUyMzMsNDguNzUzMjE2MiBDMjE0LjIz\nNTIzMyw0Ny42MzM5MTIgMjEzLjMzNzg2OCw0Ni43MzEyMTMgMjEyLjIyOTIz\nNSw0Ni43MzEyMTMgWiIgPjwvcGF0aD4KPC9nPgo8L3N2Zz4=\n",
+      "logo_filename": "github.com-logo-white.svg",
+      "display_logo": true
+    }
+  ],
+  "tags": [],
+  "time_saved_unit": "minutes",
+  "time_saved_value": 0,
+  "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
+  "integration_product": null,
+  "integration_vendor": null,
+  "exported_at": "2023-10-08T17:27:44Z",
+  "icon": ":tines:",
+  "integrations": []
+}

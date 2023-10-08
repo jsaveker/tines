@@ -1,0 +1,105 @@
+{
+  "schema_version": 18,
+  "standard_lib_version": 36,
+  "action_runtime_version": 4,
+  "name": "Your first story",
+  "description": "Congratulations, you’ve met your first automation story in Tines 🎉.\n\nWe hope this example gives you a better sense of what our platform is capable of and inspires you to start building your own.",
+  "guid": "9a35a9f33bbc6ece9fc0763eaeb9413c",
+  "slug": "your_first_story",
+  "agents": [
+    {
+      "type": "Agents::IMAPAgent",
+      "name": "Receive Email Action",
+      "disabled": false,
+      "description": null,
+      "guid": "2e328e0d562a3ac174d81b000fb7bef9",
+      "origin_story_identifier": "cloud:720c410cf6d08bcea35fcae6e217d125:a7d11548f47db40700dd3bc22e192d13",
+      "options": {
+        "mode": "email"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null
+      },
+      "visuals": {
+        "card_icon_image_contents": null,
+        "card_icon_image_filename": null,
+        "card_icon_name": null
+      },
+      "width": null
+    }
+  ],
+  "diagram_notes": [
+    {
+      "content": "\n# Check out this 2 minute video to understand the basics\n![](https://www.youtube.com/watch?v=mPW7Q6idduc&ab_channel=Tines)\n\n\n",
+      "position": [
+        105.0,
+        15.0
+      ],
+      "guid": "37c11c1098bdd747429a75b4303e2473",
+      "width": 488
+    },
+    {
+      "content": "# Next, build a very simple test story \nStart by dragging a `Send Email` action onto the Storyboard and connect it to the `Receive Email` action that we've left for you below. \n\nhttps://image-uploads.tines.com/b2fd39ea-2071-4d39-8f78-a9917c56663e.gif\n\n\n\n",
+      "position": [
+        105.0,
+        345.0
+      ],
+      "guid": "ccc13ce264dabc7ec5987300aebca945",
+      "width": 484
+    },
+    {
+      "content": "# To finish, quickly configure the actions to run your story\n\n- [ ] Start by selecting your `Send Email` action on the storyboard, then edit the subject and body from the properties panel. \n\n- [ ] Next, select the `Receive Email` action, and copy the default email address that appears in the properties panel. \n\n- [ ] Then leave Tines, open your email provider, and send a test email to the address you just copied.  \n\nYou should then receive an email from the `Send Email` action. \n\nAnd there you have it! Your first automated Story with Tines 🎊\n\n\n",
+      "position": [
+        105.0,
+        690.0
+      ],
+      "guid": "48c99f0286f7d143dbf5e3c940eef3ff",
+      "width": 293
+    },
+    {
+      "content": "![](https://image-uploads.tines.com/Tines_University_wide.png)*Ready to learn more?*\nHead to [Tines University](https://www.tines.com/university) to build your Tines knowledge and get certified.",
+      "position": [
+        105.0,
+        1065.0
+      ],
+      "guid": "3ed429db185c67f05b5ef0466074218f",
+      "width": 490
+    }
+  ],
+  "links": [],
+  "diagram_layout": "{\"2e328e0d562a3ac174d81b000fb7bef9\":[405,690]}",
+  "send_to_story_enabled": false,
+  "entry_agent_guid": null,
+  "exit_agent_guids": [],
+  "exit_agent_guid": null,
+  "api_entry_action_guids": [],
+  "api_exit_action_guids": [],
+  "keep_events_for": 86400,
+  "reporting_status": true,
+  "send_to_story_access": null,
+  "story_library_metadata": {},
+  "monitor_failures": false,
+  "send_to_stories": [],
+  "form": null,
+  "synchronous_webhooks_enabled": false,
+  "forms": [],
+  "pages": [],
+  "tags": [],
+  "time_saved_unit": "minutes",
+  "time_saved_value": 0,
+  "origin_story_identifier": "cloud:720c410cf6d08bcea35fcae6e217d125:a7d11548f47db40700dd3bc22e192d13",
+  "integration_product": null,
+  "integration_vendor": null,
+  "exported_at": "2023-10-08T17:27:44Z",
+  "integrations": []
+}
