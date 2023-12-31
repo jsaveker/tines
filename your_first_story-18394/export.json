@@ -1,7 +1,7 @@
 {
   "schema_version": 18,
-  "standard_lib_version": 36,
-  "action_runtime_version": 4,
+  "standard_lib_version": 41,
+  "action_runtime_version": 6,
   "name": "Your first story",
   "description": "Congratulations, you’ve met your first automation story in Tines 🎉.\n\nWe hope this example gives you a better sense of what our platform is capable of and inspires you to start building your own.",
   "guid": "9a35a9f33bbc6ece9fc0763eaeb9413c",
@@ -100,6 +100,6 @@
   "origin_story_identifier": "cloud:720c410cf6d08bcea35fcae6e217d125:a7d11548f47db40700dd3bc22e192d13",
   "integration_product": null,
   "integration_vendor": null,
-  "exported_at": "2023-10-08T17:56:02Z",
+  "exported_at": "2023-12-31T18:09:23Z",
   "integrations": []
 }

@@ -1,7 +1,7 @@
 {
   "schema_version": 18,
-  "standard_lib_version": 36,
-  "action_runtime_version": 4,
+  "standard_lib_version": 41,
+  "action_runtime_version": 6,
   "name": "Backup Tines Stories to GitHub",
   "description": "The Story features a form that can be used to routinely export and backup Tines Stories to GitHub. Individual Stories can be backed up by using their Story ID, or the argument 'all' for Story ID will backup all Stories that can be accessed.\n\ntags: Intermediate, Internal, GitHub, Backup\nicons: tines, ➡️, github\nvisibility: public",
   "guid": "d5b72161d78bec4b4918048e7c7cdd36",
@@ -859,7 +859,7 @@
         -586.0
       ],
       "guid": "02336accab86e89298aade4dd32f2226",
-      "width": null
+      "width": 270
     },
     {
       "content": "# Export The Story\n\nOnce the list of Stories has been received, the Tines Export Story API is used to export the Story as JSON.",
@@ -868,7 +868,7 @@
         14.0
       ],
       "guid": "9d2cdd34480266bb8b2c197faa239660",
-      "width": null
+      "width": 270
     },
     {
       "content": "# Committing the Exports\n\nThe file blob tree is pushed to GitHub. This tells GitHub how to organise the file blobs created earlier.\n\nAfter this is pushed, the tree is committed in a single commit message and a push request is sent to GitHub.",
@@ -877,7 +877,7 @@
         1050.0
       ],
       "guid": "91ae3dd9b78d0439daa78888e14eca92",
-      "width": null
+      "width": 270
     },
     {
       "content": "https://www.tines.com/api/story-library/thumbnail/87728\n\nExports stories to Github. The story features a form that can be used ad hoc to backup stories.\n\nThe Send to Story Action can be scheduled to run routine story backups.\n\nIndividual stories can be backed up by using their Story ID, or the argument 'all' for Story ID will backup all stories that can be accessed.\n\nBackups are stored in folders named for their reference slug and the Team ID they are present in.",
@@ -895,7 +895,7 @@
         -586.0
       ],
       "guid": "f41930c0643eb72e8aef297ee28fae67",
-      "width": null
+      "width": 270
     },
     {
       "content": "# Building the GitHub Tree\n\nFile blobs are created for each story in GitHub. A leaf is then created for each file blob which includes it's location in the repository. Each export and README file have their own blobs and leafs.\n\nThese leafs are then imploded into an array to create a file directory tree.\n",
@@ -1170,19 +1170,23 @@
       "containers": [
         {
           "guid": "7728d20852f5ff2461106c3f3544ead8",
-          "ranking": 0
+          "ranking": 0,
+          "category": 0
         },
         {
           "guid": "d48d8aa8b6b65951e48a6e5ad061ccba",
-          "ranking": 1073741824
+          "ranking": 1073741824,
+          "category": 0
         },
         {
           "guid": "5088dd2f14a4ddadd0480d2ec63fa182",
-          "ranking": 1610612736
+          "ranking": 1610612736,
+          "category": 0
         },
         {
           "guid": "313a0fa888359d29538236a02bc284c2",
-          "ranking": 1879048192
+          "ranking": 1879048192,
+          "category": 0
         }
       ],
       "fields": [
@@ -1201,8 +1205,11 @@
           "default_value": null,
           "content": "Backup Tines Story to Github",
           "validation_pattern": null,
-          "style": null,
-          "container_guid": "7728d20852f5ff2461106c3f3544ead8"
+          "style": "primary",
+          "container_guid": "7728d20852f5ff2461106c3f3544ead8",
+          "graph_type": 0,
+          "graph_direction": "HORIZONTAL",
+          "date_mode": "DATE"
         },
         {
           "name": "Story ID",
@@ -1219,8 +1226,11 @@
           "default_value": null,
           "content": null,
           "validation_pattern": null,
-          "style": null,
-          "container_guid": "d48d8aa8b6b65951e48a6e5ad061ccba"
+          "style": "primary",
+          "container_guid": "d48d8aa8b6b65951e48a6e5ad061ccba",
+          "graph_type": 0,
+          "graph_direction": "HORIZONTAL",
+          "date_mode": "DATE"
         },
         {
           "name": "Commit Message",
@@ -1237,8 +1247,11 @@
           "default_value": null,
           "content": null,
           "validation_pattern": null,
-          "style": null,
-          "container_guid": "5088dd2f14a4ddadd0480d2ec63fa182"
+          "style": "primary",
+          "container_guid": "5088dd2f14a4ddadd0480d2ec63fa182",
+          "graph_type": 0,
+          "graph_direction": "HORIZONTAL",
+          "date_mode": "DATE"
         },
         {
           "name": "Submit form",
@@ -1255,8 +1268,11 @@
           "default_value": null,
           "content": "Submit form",
           "validation_pattern": null,
-          "style": null,
-          "container_guid": "313a0fa888359d29538236a02bc284c2"
+          "style": "primary",
+          "container_guid": "313a0fa888359d29538236a02bc284c2",
+          "graph_type": 0,
+          "graph_direction": "HORIZONTAL",
+          "date_mode": "DATE"
         }
       ],
       "visibility": "tenant",
@@ -1274,7 +1290,7 @@
   "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:d4a9e8ef384b08172bcefad82befa218",
   "integration_product": null,
   "integration_vendor": null,
-  "exported_at": "2023-10-08T17:56:02Z",
+  "exported_at": "2023-12-31T18:09:23Z",
   "icon": ":tines:",
   "integrations": []
 }

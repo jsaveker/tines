@@ -1,7 +1,7 @@
 {
   "schema_version": 18,
-  "standard_lib_version": 36,
-  "action_runtime_version": 4,
+  "standard_lib_version": 41,
+  "action_runtime_version": 6,
   "name": "Handle GitHub notifications and notify Slack",
   "description": "Receive GitHub notifications when new issues or pull requests are opened and notify Slack.",
   "guid": "964286e5bb6dfb543e3a2a7ef3b1f484",
@@ -688,7 +688,7 @@
         315.0
       ],
       "guid": "0f588aa9637b2f5abd28c3c3f12647f1",
-      "width": null
+      "width": 270
     },
     {
       "content": "https://image-uploads.tines.com/github.png",
@@ -697,7 +697,7 @@
         270.0
       ],
       "guid": "db5a8a86514eb6457a9304fe7b510055",
-      "width": null
+      "width": 270
     },
     {
       "content": "# Requirements\n\n- [x] A GitHub repository configured to send webhook events for **Issues**, **Pull request**, **Pull request reviews**, and **Labels** categories to the address in the Webhook Action in this Story.\n- [x] A Credential `slack`",
@@ -706,7 +706,7 @@
         585.0
       ],
       "guid": "aa07567d11d26c34fabda1f2decf2e26",
-      "width": null
+      "width": 270
     },
     {
       "content": "Find new and existing issues that receive the **bug** or **engineering-assistance** labels and send them to the Slack channel **#engineering-notifications**.",
@@ -715,7 +715,7 @@
         675.0
       ],
       "guid": "7fd0c376f6e28810b177f7a244bf851e",
-      "width": null
+      "width": 270
     },
     {
       "content": "Notify the team of any new pull request comments left by your team and any pull request approvals to merge new code.",
@@ -724,7 +724,7 @@
         600.0
       ],
       "guid": "f313970e260487f93d02d754dd6f4089",
-      "width": null
+      "width": 270
     }
   ],
   "links": [
@@ -838,7 +838,7 @@
   "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:17a2aa92abc0dbc997877ef8abf0f412",
   "integration_product": null,
   "integration_vendor": null,
-  "exported_at": "2023-10-08T17:56:02Z",
+  "exported_at": "2023-12-31T18:09:23Z",
   "icon": ":github:",
   "integrations": []
 }

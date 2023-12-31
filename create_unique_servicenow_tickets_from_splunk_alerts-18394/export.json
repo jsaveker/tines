@@ -1,7 +1,7 @@
 {
   "schema_version": 18,
-  "standard_lib_version": 36,
-  "action_runtime_version": 4,
+  "standard_lib_version": 41,
+  "action_runtime_version": 6,
   "name": "Create unique ServiceNow tickets from Splunk alerts",
   "description": "Consolidate multiple Splunk alerts with the same IP address into ServiceNow tickets. Unique alerts lead to new incident tickets, child incident tickets, or comments on existing records.",
   "guid": "61bd23a70c41e7720e8f102ca873a849",
@@ -842,7 +842,7 @@
         -60.0
       ],
       "guid": "d342345c8cef2b96f0ccf4b2ecb50972",
-      "width": null
+      "width": 270
     },
     {
       "content": "**Method 2** \n\nFor those with the same IP address as an existing ticket in ServiceNow, **create a child ticket** and relate it to the parent ticket. Otherwise, create a new ticket.",
@@ -851,7 +851,7 @@
         -45.0
       ],
       "guid": "7a14f42e127b6fad7403fb49d3cfca75",
-      "width": null
+      "width": 270
     },
     {
       "content": "**Method 3** \n\nUsing a time-based `implode action`, wait until the desired time has passed before creating a single ticket in ServiceNow for each IP address, which includes all related incidents.",
@@ -860,7 +860,7 @@
         -60.0
       ],
       "guid": "cd939ecea0c57fa8a9db3cce04bb9878",
-      "width": null
+      "width": 270
     },
     {
       "content": "https://www.tines.com/api/story-library/thumbnail/1194348\n\n# Overview\n\nThree methods to create ServiceNow tickets from Splunk alerts with the same IP address, but unique in other respects. \n\nTo use the story, simply use the `Simulate Splunk alert` actions to the left, updating the payload of each one as necessary.\n",
@@ -986,7 +986,7 @@
   "origin_story_identifier": "cloud:d521f765a49c72507257a2620612ee96:79adade87d07e7392f7cc89dd30c6f07",
   "integration_product": null,
   "integration_vendor": null,
-  "exported_at": "2023-10-08T17:56:02Z",
+  "exported_at": "2023-12-31T18:09:23Z",
   "icon": ":pencil2:",
   "integrations": []
 }
